@@ -34,6 +34,7 @@ Broad Strokes Implementation:
     -Take JSON data from each link in state array
     -add array of post objects to state
     -map over array of post objects in state to render a Post Component for each
+    -Display number of comments searched and number of links found
     -pass post object prop to each <Post />
 
 -Post Component:

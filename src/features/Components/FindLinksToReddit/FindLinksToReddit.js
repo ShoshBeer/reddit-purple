@@ -1,11 +1,11 @@
 import React from "react";
 import * as example from './testJSON.json';
+//create links slice
 
+export function FindLinksToReddit() {
 
-export function FindHyperlinksToReddit() {
-
-    const filterHyperlinks = (postData) => {
-        // Find hyperlinks to Reddit posts and comments
+    const filterLinks = (postData) => {
+        // Find links to Reddit posts and comments
         // May need to add JSON.parse() here when actual data is used
         const comments = postData[1].data.children;
         let links = [];
@@ -44,7 +44,7 @@ export function FindHyperlinksToReddit() {
 
     }
 
-    console.log(filterHyperlinks(example));
+    console.log(filterLinks(example));
 
 
     // (Maybe) limit by specified number
