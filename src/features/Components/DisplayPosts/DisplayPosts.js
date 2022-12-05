@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FindHyperlinksToReddit } from "../FindHyperlinksToReddit/FindHyperlinksToReddit";
+import { FindLinksToReddit } from "../FindLinksToReddit/FindLinksToReddit";
 import { Post } from "../Post/Post";
 
 export function DisplayPosts() {
