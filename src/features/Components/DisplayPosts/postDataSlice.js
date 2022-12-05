@@ -67,3 +67,5 @@ export const selectTitles = (state) => {
 }
 export const selectPosts = (state) => state.postJSON;
 export default postDataSlice.reducer;
+
+export default postDataSlice.reducer;
