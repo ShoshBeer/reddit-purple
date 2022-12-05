@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
 import { FindHyperlinksToReddit } from './features/Components/FindHyperlinksToReddit/FindHyperlinksToReddit';
+import { DisplayPosts } from './features/Components/DisplayPosts/DisplayPosts';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             React Redux
           </a>
         </span>
+        <DisplayPosts />
         <FindHyperlinksToReddit />
       </header>
     </div>
