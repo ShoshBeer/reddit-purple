@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
-import { FindHyperlinksToReddit } from './features/Components/FindHyperlinksToReddit/FindHyperlinksToReddit';
+import { FindLinksToReddit } from './features/Components/FindLinksToReddit/FindLinksToReddit';
 import { DisplayPosts } from './features/Components/DisplayPosts/DisplayPosts';
 
 function App() {
@@ -53,7 +53,7 @@ function App() {
           </a>
         </span>
         <DisplayPosts />
-        <FindHyperlinksToReddit />
+        <FindLinksToReddit />
       </header>
     </div>
   );
