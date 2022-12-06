@@ -23,6 +23,13 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr
         return JSONresponse
 })
 
+//Grab data from urls linked in the input post url
+export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (state) => {
+        const promiseArr = state.postJSON.forEach((post) => fetch(post));
+        const response = await Promise.all(promiseArr);
+        const JSONresponse = await response.json();
+        return JSONresponse
+})
 
 const postDataSlice = createSlice({
     name: 'postData',
