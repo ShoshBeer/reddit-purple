@@ -61,4 +61,5 @@ export const changeUserInput = input.actions.changeUserInput;
 export const selectUserInput = state => state.input.userInput;
 export const selectPostData = state => state.input.postData;
 export const selectPostLink = state => state.input.postLink;
+export const selectIsValidLink = state => state.input.isValidLink;
 export const inputReducer = input.reducer;

@@ -1,6 +1,7 @@
 import React from "react";
 import { changeUserInput, 
          selectUserInput,
+         selectIsValidLink,
          fetchPostData} from './InputFieldSlice';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -26,7 +27,10 @@ export function InputField() {
                 value={useSelector(selectUserInput)}
                 placeholder="Paste a link to a Reddit post"
                 onChange={(e) => handleInput(e)}
-                onKeyUp={(e) => handleEnter(e)} ></input>
+                onKeyUp={(e) => handleEnter(e)}
+                style={useSelector(selectIsValidLink) ? 
+                    {boxShadow: "0 0 20px #02b022"} : 
+                    {boxShadow: "0 0 20px #ba1004"}} ></input>
         </div>
     )
 }
