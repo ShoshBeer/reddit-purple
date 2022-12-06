@@ -2,7 +2,7 @@ import React from "react";
 import * as example from './testJSON.json';
 import { addLinks } from "./FindLinksToRedditSlice";
 import { useDispatch } from "react-redux";
-
+//Shouldn't be a component? This file may be deleted once the parts are integrated
 
 export function FindLinksToReddit() {
 
@@ -10,9 +10,4 @@ export function FindLinksToReddit() {
 
     const dispatch = useDispatch();
     dispatch(addLinks(example));
-
-    return (
-        <div>
-        </div>
-    )
 }
