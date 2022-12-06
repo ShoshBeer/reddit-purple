@@ -24,12 +24,17 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr
 })
 
 //Grab data from urls linked in the input post url
-export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (state) => {
-        const promiseArr = state.postJSON.forEach((post) => fetch(post));
+export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr, { getState}) => {
+        const state = getState();
+        const promiseArr = state.postData.postJSON.forEach((post) => fetch(post));
+        console.log('this is the promis array', promiseArr)
         const response = await Promise.all(promiseArr);
         const JSONresponse = await response.json();
         return JSONresponse
 })
+
+const fetchedData = fetchURLData();
+console.log('I got this: ', fetchedData);
 
 const postDataSlice = createSlice({
     name: 'postData',
@@ -70,9 +75,8 @@ const postDataSlice = createSlice({
 export const { loadTitles, loadJSON } = postDataSlice.actions;
 export const loading = state => state.postData.isFetchingPostData;
 export const selectTitles = (state) => {
+    console.log('I AM THE STATE: ', state);
     return state.postData.titles;
 }
 export const selectPosts = (state) => state.postJSON;
-export default postDataSlice.reducer;
-
 export default postDataSlice.reducer;
