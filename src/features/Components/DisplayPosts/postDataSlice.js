@@ -23,15 +23,13 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr
         return JSONresponse
 })
 
-const fetchedData = fetchURLData();
-console.log('I got this: ', fetchedData);
 
 const postDataSlice = createSlice({
     name: 'postData',
     initialState,
     reducers: {
         loadJSON(state) {
-            state.postJSON = state.foundPosts.map(post => post + '.json');
+            state.postURLJSON = state.foundPosts.map(post => post + '.json');
         },
         loadTitles(state) {
             // console.log('example: ' , example)
@@ -65,7 +63,6 @@ const postDataSlice = createSlice({
 export const { loadTitles, loadJSON } = postDataSlice.actions;
 export const loading = state => state.postData.isFetchingPostData;
 export const selectTitles = (state) => {
-    console.log('I AM THE STATE: ', state);
     return state.postData.titles;
 }
 export const selectPosts = (state) => state.postJSON;
