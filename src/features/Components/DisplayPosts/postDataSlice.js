@@ -75,7 +75,6 @@ const postDataSlice = createSlice({
 export const { loadTitles, loadJSON } = postDataSlice.actions;
 export const loading = state => state.postData.isFetchingPostData;
 export const selectTitles = (state) => {
-    console.log('I AM THE STATE: ', state);
     return state.postData.titles;
 }
 export const selectPosts = (state) => state.postJSON;
