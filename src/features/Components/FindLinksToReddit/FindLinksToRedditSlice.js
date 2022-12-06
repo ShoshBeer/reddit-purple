@@ -1,3 +1,5 @@
+//TO BE DELETED (Not used)
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const links = createSlice({

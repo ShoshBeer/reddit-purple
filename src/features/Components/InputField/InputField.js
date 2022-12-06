@@ -2,7 +2,7 @@ import React from "react";
 import { changeUserInput, 
          selectUserInput,
          selectIsValidLink,
-         fetchPostData} from './InputFieldSlice';
+         fetchPostData } from './InputFieldSlice';
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -14,7 +14,7 @@ export function InputField() {
         dispatch(changeUserInput(e.target.value));
     }
 
-    const handleEnter = (e) => {
+    const handleEnter = e => {
         if (e.key === 'Enter') {
             dispatch(fetchPostData());
         }
