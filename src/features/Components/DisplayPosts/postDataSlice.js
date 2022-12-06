@@ -7,11 +7,13 @@ const initalState = { foundPosts: [
     'https://www.reddit.com/r/AmItheAsshole/comments/zd5vpq/aita_for_telling_my_parents_i_wont_attend_their/',
 ]}
 
-// export const fetchURLData = createAsyncThunk('postData/fetchURLData', async () => {
-//     state.foundPosts.map((post) => {
-//         const response = await fetch(state.postJSON)
-//     })
-// })
+//Grab data from urls linked in the input post url
+export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (state) => {
+        const promiseArr = state.postJSON.forEach((post) => fetch(post));
+        const response = await Promise.all(promiseArr);
+        const JSONresponse = await response.json();
+        return JSONresponse
+})
 
 const postDataSlice = createSlice({
     name: 'postData',
