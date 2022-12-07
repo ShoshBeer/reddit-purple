@@ -1,6 +1,8 @@
 import React from "react";
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import example from "../FindLinksToReddit/testJSON.json";
+import { selectLinks } from "../InputField/InputFieldSlice";
+import { useSelector } from "react-redux";
 
 const initialState = { foundPosts: [
     'https://www.reddit.com/r/AmItheAsshole/comments/zd31mr/aita_for_letting_my_sister_puke_on_my_brother_in/',
@@ -13,14 +15,53 @@ const initialState = { foundPosts: [
     titles: []    
 }
 
+// const failureCallback = () => {
+//     console.log('Something has failed');
+// }
+
+// async function multiFetch(array) {
+//     let returnArr = []
+//     await array.forEach(item => fetch(item).catch(item => console.log(item, ' Failed')))
+//     .then((result) => {
+//         console.log(result); 
+//         returnArr.push(result);
+//     })
+// }
+
 //Grab data from urls linked in the input post url
-export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr, { getState}) => {
-        const state = getState();
-        const promiseArr = state.postData.postJSON.forEach((post) => fetch(post));
-        console.log('this is the promis array', promiseArr)
-        const response = await Promise.all(promiseArr);
-        const JSONresponse = await response.json();
-        return JSONresponse
+export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg, { getState }) => {
+    const state = getState();
+    const JSONarray = state.postData.postJSONList;
+    let promises = [];
+    try {
+        promises = JSONarray.map( async (url) => {
+            let promise = null;
+                try {
+                    promise = await fetch(url);
+                    return promise;
+                } catch(e) {console.log('whoopsie', e)}
+        });
+    } catch(e) {console.log('teehee!', e)};
+    let JSONValue = [];
+    const getBack = Promise.allSettled(promises)
+    .then((results) => {
+        results.forEach( async (entry, ind) => {
+            if(entry.value) {
+                JSONValue[ind] = await entry.value.json()
+                console.log('JSONValue ',JSONValue) 
+                return JSONValue;
+            }
+        })
+    });
+    
+    // const JSONArray = getBack.forEach(async (entry) => {
+    //     if(entry.value) {
+    //         const JSONValue = await entry.value.json();
+    //         return JSONValue;
+    //     }
+    // });
+    console.log('THE GET BACK: ', getBack)
+    return getBack;
 })
 
 //Grab data from urls linked in the input post url
@@ -40,19 +81,24 @@ const postDataSlice = createSlice({
     name: 'postData',
     initialState,
     reducers: {
-            'loadJSON': (state) => {
-            const rawLinks = state.input.linkList;
+        //takes a passed in list of links, then appends .json before the query to provide a list of URLs from which to fetch further data
+            loadJSON(state, action) {
+            const rawLinks = action.payload;
             rawLinks.forEach((link) => {
                 const queryIndex = link.indexOf('?');
-                const JSONAdded = link.slice(0, queryIndex) + '.json' + link.slice(queryIndex);
-                state.postJSONList.push(JSONAdded);
+                let JSONAdded = '';
+                if(queryIndex !== -1) {
+                    JSONAdded = link.slice(0, queryIndex) + '.json' + link.slice(queryIndex);
+                    state.postJSONList.push(JSONAdded);
+                } else {
+                    JSONAdded = link + '.json';
+                    state.postJSONList.push(JSONAdded);
+                };
             })
-
         },
         loadTitles(state) {
-            // console.log('example: ' , example)
-            state.titles = example[0].data.children[0].data.title;
-            console.log('the titles in postDataSlice', state.titles)
+            state.titles.push(example[0].data.children[0].data.title);
+            // console.log('the titles in postDataSlice', state.titles)
             //     state.postJSON.map( (post) => { 
             //     console.log('post: ', post)
             //     console.log('this is post.data: ', post.data);
@@ -72,7 +118,8 @@ const postDataSlice = createSlice({
                 state.failedFetchingPostData = false;
             })
             .addCase(fetchURLData.fulfilled, (state, action) => {
-                state.fetchedPostData = action.payload
+                console.log('action: ', action);
+                state.foundPosts = action.payload;
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = false;
             })
@@ -91,3 +138,4 @@ export const selectTitles = (state) => {
 }
 export const selectPosts = (state) => state.postJSON;
 export default postDataSlice.reducer;
+export const selectJSONLinks = state => state.postJSONList;
