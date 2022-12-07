@@ -42,14 +42,14 @@ const input = createSlice({
         },
 
         'addLinks': (state, action) => {
-            // May need to add JSON.parse() here when actual data is used
             const comments = action.payload[1].data.children;
             const regexHyperlink = /\(http(s)?(.+)reddit\.com\/r\/([^\/]+)\/(comments\/(.+)\))/;
             // enclosed in parentheses
             const regexLink = /http(s)?(.+)reddit\.com\/r\/([^\/]+)\/(comments\/(.+))/;
-            // begins with http:// or https://, may or may not contain www., may or may not contain a subdomain (np. en.), may or may not end with a forward slash, must contain each part of the URL (domain, /r/, subreddit, "comments", identifier, and the part after the identifier)
+            // begins with http:// or https://, may or may not contain www., may or may not contain a subdomain (np. en.)*, may or may not end with a forward slash, must contain each part of the URL (domain, /r/, subreddit, "comments", identifier, and the part after the identifier)
 
             for (let comment = 0; comment < comments.length; comment++) {
+                //convert amp links to reddit links
                 if (comments[comment].kind !== "t1") {
                     //check if it's a comment
                 } else if (comments[comment].data.body.match(regexHyperlink)) {

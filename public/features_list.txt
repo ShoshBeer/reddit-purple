@@ -27,6 +27,7 @@ Broad Strokes Implementation:
     }
     -(Maybe) limit by specified number
     -Eliminate duplicates
+    -convert google AMP links to regular links and add them too
     -update state with array of links
     -export selector for array of links
 
