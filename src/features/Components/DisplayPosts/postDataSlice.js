@@ -9,7 +9,7 @@ const initialState = { foundPosts: [
     ],
     isFetchingPostData: false,
     failedFetchingPostData: false,
-    postJSON: [],
+    postJSONList: [],
     titles: []    
 }
 
@@ -40,8 +40,14 @@ const postDataSlice = createSlice({
     name: 'postData',
     initialState,
     reducers: {
-        loadJSON(state) {
-            state.postURLJSON = state.foundPosts.map(post => post + '.json');
+            'loadJSON': (state) => {
+            const rawLinks = state.input.linkList;
+            rawLinks.forEach((link) => {
+                const queryIndex = link.indexOf('?');
+                const JSONAdded = link.slice(0, queryIndex) + '.json' + link.slice(queryIndex);
+                state.postJSONList.push(JSONAdded);
+            })
+
         },
         loadTitles(state) {
             // console.log('example: ' , example)
@@ -52,6 +58,11 @@ const postDataSlice = createSlice({
             //     console.log('this is post.data: ', post.data);
             //     return post.data.children[0].data.title
             // })
+        },
+        loadFoundPosts(state) {
+            // const queryIndex = url.indexOf('?');
+            // state.postLink = url.slice(0, queryIndex) + '.json' + url.slice(queryIndex);
+            // state.foundPosts = state.input.linkList
         }
     },
     extraReducers: builder => {
@@ -74,6 +85,7 @@ const postDataSlice = createSlice({
 
 export const { loadTitles, loadJSON } = postDataSlice.actions;
 export const loading = state => state.postData.isFetchingPostData;
+
 export const selectTitles = (state) => {
     return state.postData.titles;
 }

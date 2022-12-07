@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Post = ( {post} ) => {
+export const Post = ( {post, title} ) => {
     return (
         <div>
-            <a href={post}>Link to Reddit</a>
+            <a href={post}>Link to Post: {title}</a>
         </div>
     )
 }
