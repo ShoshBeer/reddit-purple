@@ -25,9 +25,10 @@ Broad Strokes Implementation:
     -filterHyperlinks(JSONdata) {
         // Find hyperlinks to Reddit posts and comments
     }
-    -(Maybe) limit by specified number
     -Eliminate duplicates
     -convert google AMP links to regular links and add them too
+    -look for links in first level replies? Or just top reply/comment?
+    -look for links in 'more' top level comments, only given as comment IDs in the JSON
     -update state with array of links
     -export selector for array of links
 
