@@ -42,26 +42,13 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg
                 } catch(e) {console.log('whoopsie', e)}
         });
     } catch(e) {console.log('teehee!', e)};
-    let JSONValue = [];
-    const getBack = Promise.allSettled(promises)
-    .then((results) => {
-        results.forEach( async (entry, ind) => {
-            if(entry.value) {
-                JSONValue[ind] = await entry.value.json()
-                console.log('JSONValue ',JSONValue) 
-                return JSONValue;
-            }
-        })
-    });
-    
-    // const JSONArray = getBack.forEach(async (entry) => {
-    //     if(entry.value) {
-    //         const JSONValue = await entry.value.json();
-    //         return JSONValue;
-    //     }
-    // });
-    console.log('THE GET BACK: ', getBack)
-    return getBack;
+    const getBack = await Promise.allSettled(promises);
+    const getBackToo = await Promise.all(getBack.map((response) => {
+        if(response.value !== undefined) {
+            return response.value.json();
+        } else { return; }
+    }));
+    return getBackToo;
 })
 
 //Grab data from urls linked in the input post url
@@ -118,8 +105,12 @@ const postDataSlice = createSlice({
                 state.failedFetchingPostData = false;
             })
             .addCase(fetchURLData.fulfilled, (state, action) => {
-                console.log('action: ', action);
-                state.foundPosts = action.payload;
+                state.foundPosts = [];
+                action.payload.forEach(post => {
+                    if(post) {
+                        state.foundPosts.push(post);
+                    }
+                })
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = false;
             })
