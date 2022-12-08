@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FindLinksToReddit } from "../FindLinksToReddit/FindLinksToReddit";
 import { Post } from "../Post/Post";
 
 export function DisplayPosts() {
