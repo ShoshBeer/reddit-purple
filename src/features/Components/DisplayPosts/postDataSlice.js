@@ -57,11 +57,11 @@ const postDataSlice = createSlice({
             })
         },
         loadTitles(state, action) {
-            state.titles = action.payload.map((post) => {
+            state.titles = action.payload.map((post, ind) => {
                 try {
                 return post[0].data.children[0].data.title;
-                } catch { console.log('There is an error with this post.')
-                return 'This post empty';
+                } catch { console.log('There is an error with the post at index: ', ind)
+                // return null;
                 }
             });
             },
