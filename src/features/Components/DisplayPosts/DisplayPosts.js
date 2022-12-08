@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Post } from "../Post/Post";
 import { fetchURLData, loadJSON, loadTitles, selectTitles, selectJSONLinks } from "./postDataSlice"
 import { selectLinks } from '../InputField/InputFieldSlice'
