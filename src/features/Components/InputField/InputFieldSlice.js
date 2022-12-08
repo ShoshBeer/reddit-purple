@@ -26,16 +26,13 @@ const input = createSlice({
     reducers: {
         'changeUserInput': (state, action) => {
             state.userInput = action.payload;
-            const regexLink = /http(s)?(.+)reddit\.com\/r\/([^\/]+)\/(comments\/(.+))/;
-            if (action.payload.match(regexLink)) {
+            const regexPostLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^\/) ]+))/g;
+            //this one just matches up to the post ID, so if it's a link to a comment it'll grab the post that the comment is on
+            //also, no need to check for queries now
+            if (action.payload.match(regexPostLink)) {
                 state.isValidLink = true;
-                const url = action.payload.match(regexLink)[0];
-                if (url.indexOf('?') !== -1) {
-                    const queryIndex = url.indexOf('?');
-                    state.postLink = url.slice(0, queryIndex) + '.json' + url.slice(queryIndex);
-                } else {
-                    state.postLink = url + '.json';
-                }
+                const url = action.payload.match(regexPostLink)[0];
+                state.postLink = url + '.json';
             } else {
                 state.isValidLink = false;
             }
@@ -44,7 +41,7 @@ const input = createSlice({
         'addLinks': (state, action) => {
             const comments = action.payload[1].data.children;
             const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) ]+))/g;
-            // begins with http:// or https://, may or may not contain www., may or may not contain a subdomain (np. en.)*, may or may not end with a forward slash, must contain each part of the URL (domain, /r/, subreddit, "comments", identifier, and the part after the identifier)
+            // regexr.com/7441l with explanation and tests
             //can I detect and convert amp links to reddit links?
             for (let comment = 0; comment < comments.length; comment++) {
                 if (comments[comment].kind !== "t1") {
