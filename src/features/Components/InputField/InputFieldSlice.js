@@ -26,7 +26,7 @@ const input = createSlice({
     reducers: {
         'changeUserInput': (state, action) => {
             state.userInput = action.payload;
-            const regexPostLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^\/) ]+))/g;
+            const regexPostLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^/) ]+))/g;
             //this one just matches up to the post ID, so if it's a link to a comment it'll grab the post that the comment is on
             //also, no need to check for queries now
             if (action.payload.match(regexPostLink)) {
