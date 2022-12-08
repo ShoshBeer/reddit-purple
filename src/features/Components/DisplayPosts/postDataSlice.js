@@ -1,8 +1,13 @@
 import React from "react";
+<<<<<<< HEAD
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import example from "../FindLinksToReddit/testJSON.json";
 import { selectLinks } from "../InputField/InputFieldSlice";
 import { useSelector } from "react-redux";
+=======
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import example from "../FindLinksToReddit/testJSON.json";
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
 
 const initialState = { foundPosts: [
     'https://www.reddit.com/r/AmItheAsshole/comments/zd31mr/aita_for_letting_my_sister_puke_on_my_brother_in/',
@@ -11,6 +16,7 @@ const initialState = { foundPosts: [
     ],
     isFetchingPostData: false,
     failedFetchingPostData: false,
+<<<<<<< HEAD
     postJSONList: [],
     titles: []    
 }
@@ -51,6 +57,12 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg
     return getBackToo;
 })
 
+=======
+    postJSON: [],
+    titles: []    
+}
+
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
 //Grab data from urls linked in the input post url
 export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr, { getState}) => {
         const state = getState();
@@ -61,13 +73,17 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr
         return JSONresponse
 })
 
+<<<<<<< HEAD
 const fetchedData = fetchURLData();
 console.log('I got this: ', fetchedData);
+=======
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
 
 const postDataSlice = createSlice({
     name: 'postData',
     initialState,
     reducers: {
+<<<<<<< HEAD
         //takes a passed in list of links, then appends .json before the query to provide a list of URLs from which to fetch further data
             loadJSON(state, action) {
             const rawLinks = action.payload;
@@ -86,16 +102,28 @@ const postDataSlice = createSlice({
         loadTitles(state) {
             state.titles.push(example[0].data.children[0].data.title);
             // console.log('the titles in postDataSlice', state.titles)
+=======
+        loadJSON(state) {
+            state.postURLJSON = state.foundPosts.map(post => post + '.json');
+        },
+        loadTitles(state) {
+            // console.log('example: ' , example)
+            state.titles = example[0].data.children[0].data.title;
+            console.log('the titles in postDataSlice', state.titles)
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
             //     state.postJSON.map( (post) => { 
             //     console.log('post: ', post)
             //     console.log('this is post.data: ', post.data);
             //     return post.data.children[0].data.title
             // })
+<<<<<<< HEAD
         },
         loadFoundPosts(state) {
             // const queryIndex = url.indexOf('?');
             // state.postLink = url.slice(0, queryIndex) + '.json' + url.slice(queryIndex);
             // state.foundPosts = state.input.linkList
+=======
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
         }
     },
     extraReducers: builder => {
@@ -105,12 +133,16 @@ const postDataSlice = createSlice({
                 state.failedFetchingPostData = false;
             })
             .addCase(fetchURLData.fulfilled, (state, action) => {
+<<<<<<< HEAD
                 state.foundPosts = [];
                 action.payload.forEach(post => {
                     if(post) {
                         state.foundPosts.push(post);
                     }
                 })
+=======
+                state.fetchedPostData = action.payload
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = false;
             })
@@ -123,10 +155,16 @@ const postDataSlice = createSlice({
 
 export const { loadTitles, loadJSON } = postDataSlice.actions;
 export const loading = state => state.postData.isFetchingPostData;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
 export const selectTitles = (state) => {
     return state.postData.titles;
 }
 export const selectPosts = (state) => state.postJSON;
 export default postDataSlice.reducer;
+<<<<<<< HEAD
 export const selectJSONLinks = state => state.postJSONList;
+=======
+>>>>>>> 3aaca58b5345cc8740d184fa46f107c50b0b2786
