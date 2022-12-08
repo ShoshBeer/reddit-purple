@@ -14,18 +14,6 @@ const initialState = { foundPosts: [
     titles: []    
 }
 
-// const failureCallback = () => {
-//     console.log('Something has failed');
-// }
-
-// async function multiFetch(array) {
-//     let returnArr = []
-//     await array.forEach(item => fetch(item).catch(item => console.log(item, ' Failed')))
-//     .then((result) => {
-//         console.log(result); 
-//         returnArr.push(result);
-//     })
-// }
 
 //Grab data from urls linked in the input post url
 export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg, { getState }) => {
@@ -50,16 +38,6 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg
     return getBackToo;
 })
 
-// //Grab data from urls linked in the input post url
-// export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arr, { getState}) => {
-//         const state = getState();
-//         const promiseArr = state.postData.postJSON.forEach((post) => fetch(post));
-//         console.log('this is the promis array', promiseArr)
-//         const response = await Promise.all(promiseArr);
-//         const JSONresponse = await response.json();
-//         return JSONresponse
-// })
-
 const postDataSlice = createSlice({
     name: 'postData',
     initialState,
@@ -80,18 +58,8 @@ const postDataSlice = createSlice({
             })
         },
         loadTitles(state) {
-            state.titles.push(example[0].data.children[0].data.title);
-            // console.log('the titles in postDataSlice', state.titles)
-            //     state.postJSON.map( (post) => { 
-            //     console.log('post: ', post)
-            //     console.log('this is post.data: ', post.data);
-            //     return post.data.children[0].data.title
-            // })
         },
         loadFoundPosts(state) {
-            // const queryIndex = url.indexOf('?');
-            // state.postLink = url.slice(0, queryIndex) + '.json' + url.slice(queryIndex);
-            // state.foundPosts = state.input.linkList
         }
     },
     extraReducers: builder => {
