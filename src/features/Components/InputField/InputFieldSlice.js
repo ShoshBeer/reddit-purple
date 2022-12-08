@@ -43,7 +43,7 @@ const input = createSlice({
 
         'addLinks': (state, action) => {
             const comments = action.payload[1].data.children;
-            const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) ]+))/g;
+            const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n]+))/g;
             // begins with http:// or https://, may or may not contain www., may or may not contain a subdomain (np. en.)*, may or may not end with a forward slash, must contain each part of the URL (domain, /r/, subreddit, "comments", identifier, and the part after the identifier)
             //can I detect and convert amp links to reddit links?
             for (let comment = 0; comment < comments.length; comment++) {
