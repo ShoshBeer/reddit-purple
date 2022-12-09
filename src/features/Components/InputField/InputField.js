@@ -38,9 +38,9 @@ export function InputField() {
     }
 
     return (
-        <Container fluid>
+        <Container fluid="md">
             <Row className="align-items-center py-4 bg-secondary">
-                <Col xs={4} className="border" >
+                <Col xs="auto" lg="4" className="border" >
                     <Card>
                         <Card.Body >
                             <Card.Title>
@@ -67,7 +67,7 @@ export function InputField() {
                         
                     </Card>
                 </Col>
-                <Col xs={8} className="border">
+                <Col className="border">
                     <Stack gap={5} >
                         <h2>Find a post with Reddit links in the comments, and paste the URL below to browse the linked posts!</h2>
                         <InputGroup hasValidation>
