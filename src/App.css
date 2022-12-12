@@ -38,4 +38,28 @@
   }
 }
 
+.icon {
+  width: 50px;
+}
+
+.flex-container {
+  border: 3px solid black;
+  padding: 10px;
+  display: flex;
+}
+
+.flex-container.component {
+  /* align-items: center; */
+  align-content: space-between;
+  flex-wrap: wrap;
+}
+
+.flex-child {
+  width: 50px;
+  border: 5px solid red;
+}  
+
+.float-child.main {
+  width: auto;
+}
 
