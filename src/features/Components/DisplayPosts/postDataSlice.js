@@ -9,17 +9,17 @@ const initialState = { foundPosts: [],
     failedFetchingPostData: false,
     JSONPosts: [],
     titles: [],
-    subs: []   
-}
-
-const postDataSelector = (ind) => {
-    return [ind].data.children[0].data;
+    subs: [],
+    upvotes: [],
+    subs: [],
+    comments: [],
 }
 
 //Grab data from urls linked in the input post url
 export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg, {getState, dispatch}) => {
     const state = getState();
-    const JSONarray = state.postData.JSONPosts;
+    //remove .slice() method to get all
+    const JSONarray = state.postData.JSONPosts.slice(0, 5);
     let promises = [];
     try {
         promises = JSONarray.map( async (url) => {
@@ -27,14 +27,31 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg
                 try {
                     promise = await fetch(url);
                     return promise;
-                } catch(e) {console.log('whoopsie', e)}
+                } catch(e) {console.log('this error comes from mapping the JSON array to promises, inside the map function', e)}
         });
-    } catch(e) {console.log('teehee!', e)};
+    } catch(e) {console.log('this error comes from mapping the JSON array to promises, outside the map function', e)};
     const getBack = await Promise.allSettled(promises);
     const getBackToo = await Promise.all(getBack.map((response) => {
             return response.value.json();
     }));
-    try{ dispatch(loadTitles(getBackToo)); } catch(e) {console.log(e)};
+    const grabData = getBackToo.map((post) => {
+        const { title, score, subreddit_name_prefixed } = post[0].data.children[0].data;
+        const comments = post[1].data.children.map((comment) => {
+            console.log(comment.data.body);
+            return comment.data.body;
+        });
+        const smallData = {
+            title,
+            score,
+            subreddit_name_prefixed,
+            comments,
+        };
+        console.log('Here is the smallerized data', smallData);
+        return smallData;
+    })
+    try{
+        dispatch(loadTitles(grabData));
+    } catch(e) {console.log(e)};
     return getBackToo;
 })
 
@@ -58,16 +75,65 @@ const postDataSlice = createSlice({
             })
         },
         loadTitles(state, action) {
+            //Load net upvotes
+            console.log(action.payload);
+            state.upvotes = action.payload.map((post, ind) => {
+                    return post.score;
+            });
+            //Load Title
             state.titles = action.payload.map((post, ind) => {
                 try {
-                return post[0].data.children[0].data.title;
-                } catch { console.log('There is an error with the post at index: ', ind)
+                return post.title;
+                } catch { console.log('There is an error grabing the title of the post at index: ', ind)
                 // return null;
-                }
+                };
             });
-            },
-        loadFoundPosts(state) {
-        }
+            
+            //Load Subreddit
+            state.subs = action.payload.map((post, ind) => {
+                try {
+                    return post.subreddit_name_prefixed;
+                } catch(e) {
+                    console.log(e, 'There is an error grabbing the subreddit for the post at index: ', ind)
+                };
+            });
+            //load comments
+            state.comments = action.payload.map((post, ind) => {
+                try {
+                    return post.comments;
+                } catch(e) {
+                    console.log(e, 'There is an error with the post at index: ', ind)
+                };
+            });
+
+        },
+        loadUpvotes(state, action) {
+            state.upvotes = action.payload.map((post, ind) => {
+                try {
+                    return post.score;
+                } catch(e) {
+                    console.log(e, 'There is an error grabbing the net upvotes of the post at index: ', ind)
+                };
+            });
+        },
+        loadSub(state, action) {
+            state.subs = action.payload.map((post, ind) => {
+                try {
+                    return post.subreddit_name_prefixed;
+                } catch(e) {
+                    console.log(e, 'There is an error grabbing the subreddit for the post at index: ', ind)
+                };
+            });
+        },
+        loadComments(state, action) {
+            state.comments = action.payload.map((post, ind) => {
+                try {
+                    return post.comments;
+                } catch(e) {
+                    console.log(e, 'There is an error with the post at index: ', ind)
+                };
+            });
+        },
     },
     extraReducers: builder => {
         builder
@@ -92,13 +158,19 @@ const postDataSlice = createSlice({
     }
 })
 
-export const { loadTitles, loadJSON } = postDataSlice.actions;
+export const { 
+    loadTitles,
+    loadJSON,
+    loadComments,
+    loadSub,
+    loadUpvotes,
+} = postDataSlice.actions;
 export const loading = state => state.postData.isFetchingPostData;
-
 export const selectTitles = (state) => {
     return state.postData.titles;
 }
-export const selectPosts = (state) => state.postJSON;
 export default postDataSlice.reducer;
-export const selectJSONLinks = state => state.JSONPosts;
-export const selectFoundPosts = state => state.foundPosts;
+export const selectJSONLinks = state => state.postDataSlice.JSONPosts;
+export const selectUpvotes = state => state.postData.upvotes;
+export const selectSubs  = state => state.postData.subs;
+export const selectComments  = state => state.postData.comments;
