@@ -2,6 +2,7 @@ import React from "react";
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { selectLinks } from "../InputField/InputFieldSlice";
 import { useSelector } from "react-redux";
+import example from "../FindLinksToReddit/testJSON.json";
 
 const initialState = { foundPosts: [],
     isFetchingPostData: false,
