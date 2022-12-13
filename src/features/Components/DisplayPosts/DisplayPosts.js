@@ -13,6 +13,7 @@ import {
         selectUpvotes,
     } from "./postDataSlice"
 import { selectLinks } from '../InputField/InputFieldSlice'
+import { Stack } from "react-bootstrap";
 
 export function DisplayPosts() {
     const dispatch = useDispatch();
@@ -35,12 +36,11 @@ export function DisplayPosts() {
 
 
     return (
-        <div className="post-container">
-            <ul>
+        <Stack gap={3}>
                 { displayLinks.map((link, ind) => {
                     return ( 
                         <Post 
-                            post={link} 
+                            post={link}
                             key={ind}
                             title={titles[ind]}
                             sub={subs[ind]}
@@ -49,7 +49,6 @@ export function DisplayPosts() {
                         />
                     );
                 })}
-            </ul>
-        </div>
+        </Stack>
     )
 }
