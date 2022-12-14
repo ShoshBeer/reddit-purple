@@ -1,17 +1,13 @@
-import React from "react";
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { selectLinks } from "../InputField/InputFieldSlice";
-import { useSelector } from "react-redux";
-import example from "../FindLinksToReddit/testJSON.json";
 
-const initialState = { foundPosts: [],
+const initialState = { 
+    foundPosts: [],
     isFetchingPostData: false,
     failedFetchingPostData: false,
-    JSONPosts: [],
+    JSONRedditLinks: [],
     titles: [],
     subs: [],
     upvotes: [],
-    subs: [],
     comments: [],
 }
 
@@ -19,25 +15,15 @@ const initialState = { foundPosts: [],
 export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg, {getState, dispatch}) => {
     const state = getState();
     //remove .slice() method to get all
-    const JSONarray = state.postData.JSONPosts.slice(0, 5);
-    let promises = [];
-    try {
-        promises = JSONarray.map( async (url) => {
-            let promise = null;
-                try {
-                    promise = await fetch(url);
-                    return promise;
-                } catch(e) {console.log('this error comes from mapping the JSON array to promises, inside the map function', e)}
-        });
-    } catch(e) {console.log('this error comes from mapping the JSON array to promises, outside the map function', e)};
-    const getBack = await Promise.allSettled(promises);
-    const getBackToo = await Promise.all(getBack.map((response) => {
-            return response.value.json();
-    }));
-    const grabData = getBackToo.map((post) => {
+    const JSONLinks = state.postData.JSONRedditLinks.slice(0, 5);
+    const JSONDataPromises = JSONLinks.map( async (url) => {
+        return await fetch(url);
+    });
+    const JSONSettledPromises = await Promise.allSettled(JSONDataPromises);
+    const fulfilledPostData = await Promise.all(JSONSettledPromises.filter(response => response.status === 'fulfilled').map(response => response.value.json()));
+    const grabData = fulfilledPostData.map((post) => {
         const { title, score, subreddit_name_prefixed } = post[0].data.children[0].data;
         const comments = post[1].data.children.map((comment) => {
-            console.log(comment.data.body);
             return comment.data.body;
         });
         const smallData = {
@@ -46,13 +32,12 @@ export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg
             subreddit_name_prefixed,
             comments,
         };
-        console.log('Here is the smallerized data', smallData);
         return smallData;
     })
     try{
         dispatch(loadTitles(grabData));
     } catch(e) {console.log(e)};
-    return getBackToo;
+    return fulfilledPostData;
 })
 
 const postDataSlice = createSlice({
@@ -67,16 +52,15 @@ const postDataSlice = createSlice({
                 let JSONAdded = '';
                 if(queryIndex !== -1) {
                     JSONAdded = link.slice(0, queryIndex) + '.json' + link.slice(queryIndex);
-                    state.JSONPosts.push(JSONAdded);
+                    state.JSONRedditLinks.push(JSONAdded);
                 } else {
                     JSONAdded = link + '.json';
-                    state.JSONPosts.push(JSONAdded);
+                    state.JSONRedditLinks.push(JSONAdded);
                 };
             })
         },
         loadTitles(state, action) {
             //Load net upvotes
-            console.log(action.payload);
             state.upvotes = action.payload.map((post, ind) => {
                     return post.score;
             });
@@ -137,7 +121,7 @@ const postDataSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(fetchURLData.pending, (state, action) => {
+            .addCase(fetchURLData.pending, (state) => {
                 state.isFetchingPostData = true;
                 state.failedFetchingPostData = false;
             })
@@ -151,7 +135,7 @@ const postDataSlice = createSlice({
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = false;
             })
-            .addCase(fetchURLData.rejected, (state, action) => {
+            .addCase(fetchURLData.rejected, (state) => {
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = true;
             })
@@ -170,7 +154,7 @@ export const selectTitles = (state) => {
     return state.postData.titles;
 }
 export default postDataSlice.reducer;
-export const selectJSONLinks = state => state.postDataSlice.JSONPosts;
+export const selectJSONLinks = state => state.postDataSlice.JSONRedditLinks;
 export const selectUpvotes = state => state.postData.upvotes;
 export const selectSubs  = state => state.postData.subs;
 export const selectComments  = state => state.postData.comments;
