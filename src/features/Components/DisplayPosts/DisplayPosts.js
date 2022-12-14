@@ -19,8 +19,10 @@ export function DisplayPosts() {
     const dispatch = useDispatch();
     const linkList = useSelector(selectLinks);
 
+    const test = ['https://www.reddit.com/r/WhitePeopleTwitter/comments/zlnhkq/elon_musk_has_suspended_the_twitter_account_that/', 'https://github.com/ivp-dev/react-bootstrap-sidebar-menu/issues/1'];
+
     useEffect(() => {
-        dispatch(loadJSON(linkList));
+        dispatch(loadJSON(test));
         dispatch(fetchURLData());
     }, [linkList]);
 
