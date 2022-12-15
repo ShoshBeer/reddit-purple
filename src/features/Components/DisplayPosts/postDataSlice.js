@@ -1,59 +1,42 @@
-import React from "react";
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { selectLinks } from "../InputField/InputFieldSlice";
-import { useSelector } from "react-redux";
-import example from "../FindLinksToReddit/testJSON.json";
 
-const initialState = { foundPosts: [],
+const initialState = { 
     isFetchingPostData: false,
     failedFetchingPostData: false,
-    JSONPosts: [],
-    titles: [],
-    subs: [],
-    upvotes: [],
-    subs: [],
-    comments: [],
+    JSONRedditLinks: [],
+    postObjects: []
 }
 
 //Grab data from urls linked in the input post url
-export const fetchURLData = createAsyncThunk('postData/fetchURLData', async (arg, {getState, dispatch}) => {
+export const fetchURLData = createAsyncThunk(
+  'postData/fetchURLData', 
+  async (arg, {getState}) => {
     const state = getState();
+    let fulfilledLinks = [];
     //remove .slice() method to get all
-    const JSONarray = state.postData.JSONPosts.slice(0, 5);
-    let promises = [];
-    try {
-        promises = JSONarray.map( async (url) => {
-            let promise = null;
-                try {
-                    promise = await fetch(url);
-                    return promise;
-                } catch(e) {console.log('this error comes from mapping the JSON array to promises, inside the map function', e)}
-        });
-    } catch(e) {console.log('this error comes from mapping the JSON array to promises, outside the map function', e)};
-    const getBack = await Promise.allSettled(promises);
-    const getBackToo = await Promise.all(getBack.map((response) => {
-            return response.value.json();
-    }));
-    const grabData = getBackToo.map((post) => {
+    const JSONLinks = state.postData.JSONRedditLinks.slice(0, 5);
+    const JSONDataPromises = JSONLinks.map( async (url) => {
+        return await fetch(url);
+    });
+    const JSONSettledPromises = await Promise.allSettled(JSONDataPromises);
+    const fulfilledPostData = await Promise.all(JSONSettledPromises.filter((response, index) => {
+      return response.status === 'fulfilled' && response.value.ok === true && fulfilledLinks.push(state.input.linkList[index]); //links corresponding to rejected promises are removed
+      }).map(response => response.value.json())); 
+    const grabData = fulfilledPostData.map((post, index) => {
         const { title, score, subreddit_name_prefixed } = post[0].data.children[0].data;
-        const comments = post[1].data.children.map((comment) => {
-            console.log(comment.data.body);
-            return comment.data.body;
-        });
+        const comments = post[1].data.children.map(comment => comment.data.body);
         const smallData = {
             title,
             score,
             subreddit_name_prefixed,
             comments,
+            link: fulfilledLinks[index]
         };
-        console.log('Here is the smallerized data', smallData);
         return smallData;
     })
-    try{
-        dispatch(loadTitles(grabData));
-    } catch(e) {console.log(e)};
-    return getBackToo;
-})
+    return grabData;
+  }
+)
 
 const postDataSlice = createSlice({
     name: 'postData',
@@ -67,110 +50,36 @@ const postDataSlice = createSlice({
                 let JSONAdded = '';
                 if(queryIndex !== -1) {
                     JSONAdded = link.slice(0, queryIndex) + '.json' + link.slice(queryIndex);
-                    state.JSONPosts.push(JSONAdded);
+                    state.JSONRedditLinks.push(JSONAdded);
                 } else {
                     JSONAdded = link + '.json';
-                    state.JSONPosts.push(JSONAdded);
+                    state.JSONRedditLinks.push(JSONAdded);
                 };
             })
-        },
-        loadTitles(state, action) {
-            //Load net upvotes
-            console.log(action.payload);
-            state.upvotes = action.payload.map((post, ind) => {
-                    return post.score;
-            });
-            //Load Title
-            state.titles = action.payload.map((post, ind) => {
-                try {
-                return post.title;
-                } catch { console.log('There is an error grabing the title of the post at index: ', ind)
-                // return null;
-                };
-            });
-            
-            //Load Subreddit
-            state.subs = action.payload.map((post, ind) => {
-                try {
-                    return post.subreddit_name_prefixed;
-                } catch(e) {
-                    console.log(e, 'There is an error grabbing the subreddit for the post at index: ', ind)
-                };
-            });
-            //load comments
-            state.comments = action.payload.map((post, ind) => {
-                try {
-                    return post.comments;
-                } catch(e) {
-                    console.log(e, 'There is an error with the post at index: ', ind)
-                };
-            });
-
-        },
-        loadUpvotes(state, action) {
-            state.upvotes = action.payload.map((post, ind) => {
-                try {
-                    return post.score;
-                } catch(e) {
-                    console.log(e, 'There is an error grabbing the net upvotes of the post at index: ', ind)
-                };
-            });
-        },
-        loadSub(state, action) {
-            state.subs = action.payload.map((post, ind) => {
-                try {
-                    return post.subreddit_name_prefixed;
-                } catch(e) {
-                    console.log(e, 'There is an error grabbing the subreddit for the post at index: ', ind)
-                };
-            });
-        },
-        loadComments(state, action) {
-            state.comments = action.payload.map((post, ind) => {
-                try {
-                    return post.comments;
-                } catch(e) {
-                    console.log(e, 'There is an error with the post at index: ', ind)
-                };
-            });
         },
     },
     extraReducers: builder => {
         builder
-            .addCase(fetchURLData.pending, (state, action) => {
+            .addCase(fetchURLData.pending, (state) => {
                 state.isFetchingPostData = true;
                 state.failedFetchingPostData = false;
             })
             .addCase(fetchURLData.fulfilled, (state, action) => {
-                state.foundPosts = [];
-                action.payload.forEach(post => {
-                    if(post && post.length === 2) {
-                        state.foundPosts.push(post);
-                    }
-                })
+                console.log(`extra reducer:`);
+                console.log(action.payload);
+                state.postObjects = action.payload;
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = false;
             })
-            .addCase(fetchURLData.rejected, (state, action) => {
+            .addCase(fetchURLData.rejected, (state) => {
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = true;
             })
     }
 })
 
-export const { 
-    loadTitles,
-    loadJSON,
-    loadComments,
-    loadSub,
-    loadUpvotes,
-} = postDataSlice.actions;
-export const loading = state => state.postData.isFetchingPostData;
-export const selectTitles = (state) => {
-    return state.postData.titles;
-}
+export const loadJSON = postDataSlice.actions.loadJSON;
+export const selectLoading = state => state.postData.isFetchingPostData;
+export const selectJSONLinks = state => state.postDataSlice.JSONRedditLinks;
+export const selectPostObjects  = state => state.postData.postObjects;
 export default postDataSlice.reducer;
-export const selectJSONLinks = state => state.postDataSlice.JSONPosts;
-export const selectUpvotes = state => state.postData.upvotes;
-export const selectSubs  = state => state.postData.subs;
-export const selectComments  = state => state.postData.comments;
