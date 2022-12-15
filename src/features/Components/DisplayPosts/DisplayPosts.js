@@ -15,13 +15,6 @@ export function DisplayPosts() {
     const postObjects = useSelector(selectPostObjects);
     const loading = useSelector(selectLoading);
 
-    // const test = [
-    //   'https://www.reddit.com/r/WhitePeopleTwitter/comments/zlnhkq/elon_musk_has_suspended_the_twitter_account_that/',  
-    //   'https://www.reddit.com/r/AskReddit/comments/9wsvhk/what_is_the_best_post_of_reddit_of_all_time/', 
-    //   'https://www.reddit.com/r/todayilearned/comments/zmgqby/til_that_in_2011_a_russian_wouldbe_suicide_bomber/the',
-    //   'https://www.reddit.com/r/todayilearned/comments/zm04zt/til_pacman_grossed_1_billion_in_quarters_in_its/', 
-    //   'https://zombo.com/'];
-
     useEffect(() => {
         dispatch(loadJSON(linkList));
         dispatch(fetchURLData());
