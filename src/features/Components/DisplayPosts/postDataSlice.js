@@ -26,7 +26,8 @@ export const fetchURLData = createAsyncThunk(
       return response.status === 'fulfilled' && response.value.ok === true && fulfilledLinks.push(state.input.linkList[index]); //links corresponding to rejected promises are removed
       }).map(response => response.value.json())); 
     const grabData = fulfilledPostData.map((post, index) => {
-        const { title, score, subreddit_name_prefixed, selftext, url } = post[0].data.children[0].data;
+        const { title, score, subreddit_name_prefixed, selftext, created_utc, url } = post[0].data.children[0].data;
+        //still need to figure out media posts. I think images can be found at post[0].data.children[0].data.secure_media_embed.media_domain_url but not sure how to use that
         const comments = post[1].data.children.map(comment => comment.data.body);
         const smallData = {
             title,
@@ -35,6 +36,7 @@ export const fetchURLData = createAsyncThunk(
             selftext,
             comments,
             url,
+            created_utc,
             link: fulfilledLinks[index]
         };
         return smallData;
@@ -70,8 +72,6 @@ const postDataSlice = createSlice({
                 state.failedFetchingPostData = false;
             })
             .addCase(fetchURLData.fulfilled, (state, action) => {
-                console.log(`extra reducer:`);
-                console.log(action.payload);
                 state.postObjects = action.payload;
                 state.isFetchingPostData = false;
                 state.failedFetchingPostData = false;
