@@ -15,27 +15,20 @@ import { DisplayPosts } from './features/Components/DisplayPosts/DisplayPosts';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLinks } from './features/Components/InputField/InputFieldSlice';
 
-const dispatch = useDispatch();
-const linkList = useSelector(selectLinks);
-
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
       {
-        path: "input",
+        path: "",
         element: <InputField mt="10"/>
       },
       {
         path: "display",
         element: <DisplayPosts />,
-        loader: async () => {
-            dispatch(loadJSON(linkList));
-            dispatch(fetchURLData());
         },
-      }
-    ]
+    ],
   },
 ]);
 
