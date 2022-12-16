@@ -5,6 +5,11 @@ import { InputField } from './features/Components/InputField/InputField';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {
+  createBrowserRouter,
+  Outlet,
+  RouteProvider,
+} from "react-router-dom";
 
 function App() {
   return (
@@ -15,9 +20,10 @@ function App() {
           <p>Use this site to browse Reddit posts linked in the comments of another post!</p>
           <p>Pop this link below to see what happens: https://www.reddit.com/r/AskReddit/comments/9wsvhk/what_is_the_best_post_of_reddit_of_all_time/</p>
         </Col>
+        <Col>
+          <Outlet />
+        </Col>
       </Row>
-      <InputField mt="10"/>
-      <DisplayPosts />
     </Container>
   );
 }
