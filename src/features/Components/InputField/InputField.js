@@ -17,7 +17,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import Reddit_img from "../../../resources/Reddit_old_way.png";
 import placeholder from "../../../resources/Placeholder.png";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 export function InputField() {
 
@@ -25,19 +26,19 @@ export function InputField() {
         { name: 'Before', value: '1', text: 'So much effort to find the links!', img: Reddit_img },
         { name: 'After', value: '2', text: 'Easy to browse :)', img: placeholder }
     ];
-
     const [radioValue, setRadioValue] = useState(radios[0]);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleInput = e => {
         dispatch(changeUserInput(e.target.value));
     }
-
     const handleEnter = e => {
-        if (e.key === 'Enter') {
+        // if (e.key === 'Enter') {
             dispatch(fetchPostData());
-        }
+            navigate('/display');
+        // }
     }
 
     return (
@@ -75,19 +76,22 @@ export function InputField() {
                         <h2>Find a post with Reddit links in the comments, and paste the URL below to browse the linked posts!</h2>
 
                         <Stack gap={3}>
+                          <form>
                             <InputGroup hasValidation>
                                 <Form.Control
                                     value={useSelector(selectUserInput)}
                                     placeholder="Paste a link to a Reddit post"
                                     onChange={(e) => handleInput(e)}
-                                    onKeyUp={(e) => handleEnter(e)}
+                                    // onKeyUp={(e) => handleEnter(e)}
                                     type="text"
-                                    isValid={useSelector(selectIsValidLink)}>
-                                </Form.Control>
+                                    isValid={useSelector(selectIsValidLink)}
+                                    />
+                                <Button as="input" type="submit" value="Submit" onClick={(e) => handleEnter(e)} />
                                 {/* <Form.Control.Feedback type="invalid">
                                         Please enter a valid Reddit post link.
                                     </Form.Control.Feedback> */}
                             </InputGroup>
+                          </form>
                         </Stack>
 
                     </Stack>

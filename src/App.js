@@ -21,12 +21,6 @@ function App() {
       </Row>
       <Row>
         <Outlet />
-        <Link
-          className="btn btn-primary"
-          role="button"
-          to="display"
-        >GO!
-        </Link>
       </Row>
     </Container>
   );
