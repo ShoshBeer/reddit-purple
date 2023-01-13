@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Post } from "../Post/Post";
+import { FullPost } from "../FullPost/FullPost";
 import {
         fetchURLData, 
         loadJSON,
@@ -22,19 +23,22 @@ export function DisplayPosts() {
     }, [dispatch, linkList]);
 
     //remove this const, and change mapped array in <ul> to linkList get all
-    const displayLinks = postObjects.slice(0, 5);
+    const displayLinks = postObjects.slice(0, 10);
 
     return (
         <Stack gap={3}>
           { loading ? <p>Loading</p> : postObjects.length === 0 ? <div></div> : displayLinks.map((post, ind) => {
               return ( 
-                  <Post 
-                      post={post.link} 
+                  <FullPost 
+                      link={post.link} 
                       key={ind}
                       title={post.title}
+                      author={post.author}
+                      body={post.selftext}
                       sub={post.subreddit_name_prefixed}
                       score={post.score}
-                      comment={post.comments}
+                      comments={post.comments}
+                      date={post.created_utc}
                   />
               );
           })}
