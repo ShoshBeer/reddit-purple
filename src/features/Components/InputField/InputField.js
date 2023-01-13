@@ -30,6 +30,7 @@ export function InputField() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const valid = useSelector(selectIsValidLink);
 
     const handleInput = e => {
         dispatch(changeUserInput(e.target.value));
@@ -76,7 +77,7 @@ export function InputField() {
                         <h2>Find a post with Reddit links in the comments, and paste the URL below to browse the linked posts!</h2>
 
                         <Stack gap={3}>
-                          <form>
+                          <Form>
                             <InputGroup hasValidation>
                                 <Form.Control
                                     value={useSelector(selectUserInput)}
@@ -84,14 +85,23 @@ export function InputField() {
                                     onChange={(e) => handleInput(e)}
                                     // onKeyUp={(e) => handleEnter(e)}
                                     type="text"
-                                    isValid={useSelector(selectIsValidLink)}
+                                    isValid={valid}
+                                    style={
+                                        {borderRadius: "0.375rem 0 0 0.375rem"}
+                                    }
+                                />
+                                    <Button
+                                    as="input"
+                                    type="submit"
+                                    value="Submit"
+                                    id="button-addon1"
+                                    onClick={(e) => handleEnter(e)}
                                     />
-                                <Button as="input" type="submit" value="Submit" onClick={(e) => handleEnter(e)} />
                                 {/* <Form.Control.Feedback type="invalid">
                                         Please enter a valid Reddit post link.
                                     </Form.Control.Feedback> */}
                             </InputGroup>
-                          </form>
+                          </Form>
                         </Stack>
 
                     </Stack>
