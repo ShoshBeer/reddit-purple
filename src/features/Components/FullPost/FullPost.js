@@ -40,7 +40,6 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
       </Card.Header>
       {body.length > 0 && body !== '[deleted]' && <Card.Body style={leftAlign}>
         <Card.Text className="post-body">
-          {console.log(body.length)}
           <p>{body.length < 500 ? body : showMorePost ? body : `${body.substring(0, 450)}...`}</p>
           {body.length >= 500 && <Button 
             className='d-grid' 
