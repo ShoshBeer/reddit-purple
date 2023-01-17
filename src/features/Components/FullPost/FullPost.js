@@ -40,26 +40,27 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
       </Card.Header>
       {body.length > 0 && body !== '[deleted]' && <Card.Body style={leftAlign}>
         <Card.Text className="post-body">
-          <p>{showMorePost ? body : `${body.substring(0, 450)}...`}</p>
-          <Button 
+          {console.log(body.length)}
+          <p>{body.length < 500 ? body : showMorePost ? body : `${body.substring(0, 450)}...`}</p>
+          {body.length >= 500 && <Button 
             className='d-grid' 
             size="sm"
             variant="outline-secondary"
             onClick={() => setShowMorePost(!showMorePost)} >
               {showMorePost ? 'Show less' : 'Show more'}
-          </Button>
+          </Button>}
         </Card.Text>
       </Card.Body>}
       {comments.length === 1 && <Card.Footer className="post-body" style={leftAlign} >
         <p><b><i>u/{comments[0][1]}</i></b></p>
-        <p>{showMoreComment ? comments[0][0] : `${comments[0][0].substring(0, 450)}...`}</p>
-        <Button 
+        <p>{comments[0][0].length < 500 ? comments[0][0] : showMoreComment ? comments[0][0] : `${comments[0][0].substring(0, 450)}...`}</p>
+        {comments[0][0].length >= 500 && <Button 
             className='d-grid' 
             size="sm"
             variant="outline-secondary"
             onClick={() => setShowMoreComment(!showMoreComment)} >
               {showMoreComment ? 'Show less' : 'Show more'}
-        </Button>
+        </Button>}
       </Card.Footer> }
     </Card>
   )
