@@ -1,3 +1,7 @@
+.post-body {
+  white-space: pre-line;
+}
+
 .App {
   text-align: center;
 }

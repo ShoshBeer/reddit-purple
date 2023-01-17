@@ -35,11 +35,13 @@ export function InputField() {
     const handleInput = e => {
         dispatch(changeUserInput(e.target.value));
     }
-    const handleEnter = e => {
-        // if (e.key === 'Enter') {
-            dispatch(fetchPostData());
-            navigate('/display');
-        // }
+    const handleEnter = () => {
+        dispatch(fetchPostData());
+        navigate('/display');
+    }
+
+    const handleExample = () => {
+      dispatch(changeUserInput("https://www.reddit.com/r/AskReddit/comments/9wsvhk/what_is_the_best_post_of_reddit_of_all_time/"));
     }
 
     return (
@@ -73,37 +75,32 @@ export function InputField() {
                     </Card>
                 </Col>
                 <Col xs={8}>
-                    <Stack gap={5} >
+                    <Stack gap={5}>
                         <h2>Find a post with Reddit links in the comments, and paste the URL below to browse the linked posts!</h2>
-
+                        <Button variant='outline-secondary' onClick={handleExample}>Click here for an example!</Button>
                         <Stack gap={3}>
                           <Form>
-                            <InputGroup hasValidation>
+                            <InputGroup>
                                 <Form.Control
                                     value={useSelector(selectUserInput)}
                                     placeholder="Paste a link to a Reddit post"
                                     onChange={(e) => handleInput(e)}
-                                    // onKeyUp={(e) => handleEnter(e)}
                                     type="text"
-                                    isValid={valid}
                                     style={
                                         {borderRadius: "0.375rem 0 0 0.375rem"}
                                     }
                                 />
                                     <Button
-                                    as="input"
-                                    type="submit"
-                                    value="Submit"
-                                    id="button-addon1"
-                                    onClick={(e) => handleEnter(e)}
+                                      as="input"
+                                      type="submit"
+                                      value="Submit"
+                                      id="button-addon1"
+                                      disabled={!valid}
+                                      onClick={handleEnter}
                                     />
-                                {/* <Form.Control.Feedback type="invalid">
-                                        Please enter a valid Reddit post link.
-                                    </Form.Control.Feedback> */}
                             </InputGroup>
                           </Form>
                         </Stack>
-
                     </Stack>
                 </Col>
             </Row>

@@ -15,8 +15,6 @@ function App() {
         <Col>
           <h1>Welcome to the Museum of Reddit Natural History!</h1>
           <p>Use this site to browse Reddit posts linked in the comments of another post!</p>
-          <p>Pop this link below to see what happens:</p>
-          <p>https://www.reddit.com/r/AskReddit/comments/9wsvhk/what_is_the_best_post_of_reddit_of_all_time/</p>
         </Col>
       </Row>
       <Row>
