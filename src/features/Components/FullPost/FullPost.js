@@ -1,7 +1,11 @@
-import { Container, Row, Col, Card, Button} from "react-bootstrap";
+import { Card, Button} from "react-bootstrap";
+import { useState } from "react";
 import upvotes from "../../../resources/upvotes.png";
 
 export function FullPost ({ title, author, body, comments, score, date, sub, link }) {
+
+  const [showMorePost, setShowMorePost] = useState(false);
+  const [showMoreComment, setShowMoreComment] = useState(false);
 
   const leftAlign = {
     textAlign: 'left'
@@ -9,7 +13,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
 
   const titleStyle = {
     textAlign: 'left',
-    fontSize: '150%',
+    fontSize: '130%',
   }
 
   return (
@@ -29,18 +33,33 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
           size='sm' 
           variant='primary' 
           style={{
-            clear: 'left',
-            display: 'block'}} 
+            clear: 'both',
+            display: 'block'
+          }} 
           >View Post in Reddit</Button>
       </Card.Header>
-      <Card.Body style={leftAlign}>
+      {body.length > 0 && body !== '[deleted]' && <Card.Body style={leftAlign}>
         <Card.Text className="post-body">
-          {body}
+          <p>{body.length < 500 ? body : showMorePost ? body : `${body.substring(0, 450)}...`}</p>
+          {body.length >= 500 && <Button 
+            className='d-grid' 
+            size="sm"
+            variant="outline-secondary"
+            onClick={() => setShowMorePost(!showMorePost)} >
+              {showMorePost ? 'Show less' : 'Show more'}
+          </Button>}
         </Card.Text>
-      </Card.Body>
+      </Card.Body>}
       {comments.length === 1 && <Card.Footer className="post-body" style={leftAlign} >
         <p><b><i>u/{comments[0][1]}</i></b></p>
-        <p>{comments[0][0]}</p>
+        <p>{comments[0][0].length < 500 ? comments[0][0] : showMoreComment ? comments[0][0] : `${comments[0][0].substring(0, 450)}...`}</p>
+        {comments[0][0].length >= 500 && <Button 
+            className='d-grid' 
+            size="sm"
+            variant="outline-secondary"
+            onClick={() => setShowMoreComment(!showMoreComment)} >
+              {showMoreComment ? 'Show less' : 'Show more'}
+        </Button>}
       </Card.Footer> }
     </Card>
   )
