@@ -25,7 +25,7 @@ export const fetchURLData = createAsyncThunk(
     const grabData = fulfilledPostData.map((post, index) => {
         const { title, author, score, subreddit_name_prefixed, selftext, created_utc, url } = post[0].data.children[0].data;
         //still need to figure out media posts. I think images can be found at post[0].data.children[0].data.secure_media_embed.media_domain_url but not sure how to use that
-        const comments = post[1].data.children.map(comment => [comment.data.body, comment.data.author]);
+        const comments = post[1].data.children.map(comment => [comment.data.body, comment.data.author, comment.data.score, comment.data.total_awards_received]);
         const smallData = {
             title,
             author,

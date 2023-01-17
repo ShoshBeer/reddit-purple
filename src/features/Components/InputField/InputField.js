@@ -46,6 +46,12 @@ export function InputField() {
 
     return (
         <Container fluid>
+            <Row>
+              <Col>
+                <h1>Welcome to the Museum of Reddit Natural History!</h1>
+                <p>Use this site to browse Reddit posts linked in the comments of another post!</p>
+              </Col>
+            </Row>
             <Row className="align-items-center py-4">
                 <Col xs={4}>
                     <Card>
