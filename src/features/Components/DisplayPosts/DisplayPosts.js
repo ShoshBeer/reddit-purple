@@ -7,14 +7,24 @@ import {
         selectLoading, 
         selectPostObjects,
     } from "./postDataSlice"
-import { selectLinks } from '../InputField/InputFieldSlice'
+import { selectLinks, selectIsValidLink } from '../InputField/InputFieldSlice'
 import { Stack } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export function DisplayPosts() {
     const dispatch = useDispatch();
     const linkList = useSelector(selectLinks);
     const postObjects = useSelector(selectPostObjects);
     const loading = useSelector(selectLoading);
+    const navigate = useNavigate();
+    const isValid = useSelector(selectIsValidLink);
+
+    //Change this to key off of "IsValidLink" insead.
+    useEffect(() => {
+        if(isValid === false) {
+            navigate("/");
+        } 
+    }, [navigate, isValid]);
 
     useEffect(() => {
         dispatch(loadJSON(linkList));
