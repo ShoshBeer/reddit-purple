@@ -33,8 +33,9 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
           size='sm' 
           variant='primary' 
           style={{
-            clear: 'left',
-            display: 'block'}} 
+            clear: 'both',
+            display: 'block'
+          }} 
           >View Post in Reddit</Button>
       </Card.Header>
       {body.length > 0 && body !== '[deleted]' && <Card.Body style={leftAlign}>
