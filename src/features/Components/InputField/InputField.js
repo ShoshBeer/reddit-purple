@@ -15,16 +15,16 @@ import Stack from "react-bootstrap/Stack";
 import Card from "react-bootstrap/Card";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import Reddit_img from "../../../resources/Reddit_old_way.png";
-import placeholder from "../../../resources/Placeholder.png";
+import old_img from "../../../resources/old_way_cr.png";
+import new_img from "../../../resources/new_way_cr.png";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 export function InputField() {
 
     const radios = [
-        { name: 'Before', value: '1', text: 'So much effort to find the links!', img: Reddit_img },
-        { name: 'After', value: '2', text: 'Easy to browse :)', img: placeholder }
+        { name: 'Before', value: '1', text: 'Where are the links?', img: old_img },
+        { name: 'After', value: '2', text: 'Here they are :)', img: new_img }
     ];
     const [radioValue, setRadioValue] = useState(radios[0]);
 
@@ -48,13 +48,13 @@ export function InputField() {
         <Container fluid>
             <Row>
               <Col>
-                <h1>Welcome to the Museum of Reddit Natural History!</h1>
-                <p>Use this site to browse Reddit posts linked in the comments of another post!</p>
+                <h1 style={{paddingTop: '15px'}}>Welcome to the Museum of Reddit Natural History!</h1>
+                {/* <h2 style={{fontSize: '1.5rem'}}>Use this site to browse Reddit posts linked in the comments of another post!</h2> */}
               </Col>
             </Row>
             <Row className="align-items-center py-4">
-                <Col xs={4}>
-                    <Card>
+                <Col md={4}>
+                    <Card className="mb-4">
                         <Card.Body >
                             <Card.Title>
                                 <ButtonGroup>
@@ -73,14 +73,13 @@ export function InputField() {
                                 </ButtonGroup>
                             </Card.Title>
                             <Card.Text>
-                                {radioValue.text}
+                                <h3 style={{fontSize: '1.5rem'}}>{radioValue.text}</h3>
                             </Card.Text>
                             <Card.Img src={radioValue.img} />
                         </Card.Body>
-
                     </Card>
                 </Col>
-                <Col xs={8}>
+                <Col md={8}>
                     <Stack gap={5}>
                         <h2>Find a post with Reddit links in the comments, and paste the URL below to browse the linked posts!</h2>
                         <Button variant='outline-secondary' onClick={handleExample}>Click here for an example!</Button>

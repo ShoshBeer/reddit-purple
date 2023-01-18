@@ -46,7 +46,7 @@ export function DisplayPosts() {
         <div className="mt-4">
           {postObjects.length !== 0 &&
             <>
-            <btn onClick={() => navigate('/')} style={{display: 'inline', float: 'left', width: '56px'}}><img height='50px' src={home}/></btn>
+            <btn onClick={() => navigate('/')} style={{display: 'inline', float: 'left', width: '56px'}}><img alt='Home icon' height='50px' src={home}/></btn>
             <h2>{postTitle[0].data.children[0].data.title}</h2>
             <p style={{marginTop: '10px'}}>Searched {totalComments} comments and found {linkList.length} posts!</p>
             </>
