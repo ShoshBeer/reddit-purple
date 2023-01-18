@@ -6,6 +6,13 @@
   text-align: center;
 }
 
+btn:hover {
+  cursor: pointer;
+  border: 2px solid rgb(11, 94, 215);
+  border-radius: 10%;
+
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

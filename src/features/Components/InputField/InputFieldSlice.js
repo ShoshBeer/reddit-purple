@@ -41,15 +41,13 @@ const input = createSlice({
         'addLinks': (state, action) => {
             const comments = action.payload[1].data.children;
             const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n]+))/g;
-            // regexr.com/7441l with explanation and tests
-            //can I detect and convert amp links to reddit links?
             for (let comment = 0; comment < comments.length; comment++) {
                 if (comments[comment].kind !== "t1") {
                     //check if it's a comment
                 } else if (comments[comment].data.body.match(regexLink)) {
                     //check if there's a link
                     const urlArray = comments[comment].data.body.match(regexLink);
-                    //url is an array with all matching elements (i.e. each element is a reddit link)
+                    //urlArray is an array with all matching elements (i.e. each element is a reddit link)
                     for (let url=0; url < urlArray.length; url++) {
                         if (!state.linkList.includes(urlArray[url])) {
                             state.linkList.push(urlArray[url]);
@@ -85,6 +83,7 @@ export const selectIsValidLink = state => state.input.isValidLink;
 export const selectPostLink = state => state.input.postLink;
 export const selectPostData = state => state.input.postData;
 export const selectLinks = state => state.input.linkList;
+export const selectCommentCounter = state => state.input.commentCounter;
 export const changeUserInput = input.actions.changeUserInput;
 export const addLinks = input.actions.addLinks;
 export const inputReducer = input.reducer;
