@@ -40,7 +40,7 @@ export function DisplayPosts() {
     }, [dispatch, linkList]);
 
     //remove this const, and change mapped array in <ul> to linkList get all
-    const displayLinks = postObjects.slice(0, 5);
+    const displayLinks = postObjects.slice(0, 10);
 
     return (
         <div className="mt-4">
@@ -64,7 +64,10 @@ export function DisplayPosts() {
                         score={post.score}
                         comments={post.comments}
                         date={post.created_utc}
-                        media={post.secure_media}
+                        media_embed={post.media_embed}
+                        secure_media={post.secure_media}
+                        secure_media_embed={post.secure_media_embed}
+                        media={post.media}
                     />
                 );
             })}
