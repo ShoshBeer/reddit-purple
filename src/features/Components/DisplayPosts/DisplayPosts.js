@@ -40,7 +40,7 @@ export function DisplayPosts() {
     }, [dispatch, linkList]);
 
     //remove this const, and change mapped array in <ul> to linkList get all
-    const displayLinks = postObjects.slice(0, 10);
+    const displayLinks = postObjects.slice(0, 15);
 
     return (
         <div className="mt-4">

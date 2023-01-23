@@ -14,7 +14,7 @@ export const fetchURLData = createAsyncThunk(
     const state = getState();
     let fulfilledLinks = [];
     //remove .slice() method to get all links found 
-    const JSONLinks = state.postData.JSONRedditLinks.slice(0, 10);
+    const JSONLinks = state.postData.JSONRedditLinks.slice(0, 15);
     const JSONDataPromises = JSONLinks.map( async (url) => {
         return await fetch(url);
     });
