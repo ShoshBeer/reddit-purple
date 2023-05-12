@@ -56,7 +56,7 @@ export function DisplayPosts() {
                 return ( 
                     <FullPost 
                         link={post.link} 
-                        key={ind}
+                        key={ind+post.link}
                         title={post.title}
                         author={post.author}
                         body={post.selftext}
@@ -68,6 +68,7 @@ export function DisplayPosts() {
                         secure_media={post.secure_media}
                         secure_media_embed={post.secure_media_embed}
                         media={post.media}
+                        url={post.url}
                     />
                 );
             })}
