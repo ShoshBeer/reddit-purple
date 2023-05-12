@@ -40,13 +40,13 @@ export function DisplayPosts() {
     }, [dispatch, linkList]);
 
     //remove this const, and change mapped array in <ul> to linkList get all
-    const displayLinks = postObjects.slice(0, 5);
+    const displayLinks = postObjects.slice(0, 15);
 
     return (
         <div className="mt-4">
           {postObjects.length !== 0 &&
             <>
-            <btn onClick={() => navigate('/')} style={{display: 'inline', float: 'left', width: '56px'}}><img alt='Home icon' height='50px' src={home}/></btn>
+            <img className="home-icon" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
             <h2>{postTitle[0].data.children[0].data.title}</h2>
             <p style={{marginTop: '10px'}}>Searched {totalComments} comments and found {linkList.length} posts!</p>
             </>
@@ -56,7 +56,7 @@ export function DisplayPosts() {
                 return ( 
                     <FullPost 
                         link={post.link} 
-                        key={ind}
+                        key={ind+post.link}
                         title={post.title}
                         author={post.author}
                         body={post.selftext}
@@ -64,6 +64,11 @@ export function DisplayPosts() {
                         score={post.score}
                         comments={post.comments}
                         date={post.created_utc}
+                        media_embed={post.media_embed}
+                        secure_media={post.secure_media}
+                        secure_media_embed={post.secure_media_embed}
+                        media={post.media}
+                        url={post.url}
                     />
                 );
             })}

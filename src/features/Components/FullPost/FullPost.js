@@ -2,7 +2,7 @@ import { Card, Button} from "react-bootstrap";
 import { useState } from "react";
 import upvotes from "../../../resources/upvotes.png";
 
-export function FullPost ({ title, author, body, comments, score, date, sub, link }) {
+export function FullPost ({ title, author, body, comments, score, date, sub, link, media_embed, secure_media, secure_media_embed, media, url }) {
 
   const [showMorePost, setShowMorePost] = useState(false);
   const [showMoreComment, setShowMoreComment] = useState(false);
@@ -16,6 +16,10 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
     fontSize: '130%',
   }
 
+  const htmlChars = (str) => {
+    return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  }
+
   return (
     <Card>
       <Card.Header>
@@ -27,6 +31,22 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
           marginRight: 3}}/>
         <p style={{float: 'left', }}>{score}</p>
         <p style={{float: 'right'}} >Posted in <b>{sub}</b> by <b>u/{author}</b> on <b>{new Date(date*1000).toDateString()}</b></p>
+        { Object.keys(secure_media_embed).length !== 0 &&
+          <iframe 
+            src={secure_media_embed.media_domain_url} 
+            scrolling={secure_media_embed.scrolling ? 'yes' : 'no'}
+            width={secure_media_embed.width} 
+            height={secure_media_embed.height}
+            loading='lazy'
+            style={{clear: 'both', display: 'block'}}
+          /> 
+        }
+        { url.search(/^.*\.(JPG|jpg)/) !== -1 &&
+          <img 
+            src={url}
+            style={{maxWidth: '-webkit-fill-available'}}
+          />
+        }
         <Button 
           href={link}
           target="_blank"
@@ -38,9 +58,25 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
           }} 
           >View Post in Reddit</Button>
       </Card.Header>
+      {/* { Object.keys(secure_media_embed).length !== 0 && <Card.Body>
+        <iframe 
+          src={secure_media_embed.media_domain_url} 
+          scrolling={secure_media_embed.scrolling ? 'yes' : 'no'}
+          width={secure_media_embed.width} 
+          // height={secure_media_embed.height}
+          height={secure_media_embed.width}
+          ></iframe>  
+      </Card.Body>} */}
+      {/* { Object.keys(media_embed).length !== 0 && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(media_embed.content)}}></Card.Body> }
+      <hr />
+      { secure_media && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(secure_media.oembed.html)}}></Card.Body> }
+      <hr />
+      { Object.keys(secure_media_embed).length !== 0 && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(secure_media_embed.content)}}></Card.Body> }
+      <hr />
+      { media && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(media.oembed.html)}}></Card.Body> } */}
       {body.length > 0 && body !== '[deleted]' && <Card.Body style={leftAlign}>
         <Card.Text className="post-body">
-          <p>{body.length < 500 ? body : showMorePost ? body : `${body.substring(0, 450)}...`}</p>
+          {body.length < 500 ? body : showMorePost ? body : `${body.substring(0, 450)}...`}
           {body.length >= 500 && <Button 
             className='d-grid' 
             size="sm"
@@ -51,8 +87,9 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
         </Card.Text>
       </Card.Body>}
       {comments.length === 1 && <Card.Footer className="post-body" style={leftAlign} >
-        <p><b><i>u/{comments[0][1]}</i></b></p>
-        <p>{comments[0][0].length < 500 ? comments[0][0] : showMoreComment ? comments[0][0] : `${comments[0][0].substring(0, 450)}...`}</p>
+        <b><i>u/{comments[0][1]}</i></b>
+        <br />
+        {comments[0][0].length < 500 ? comments[0][0] : showMoreComment ? comments[0][0] : `${comments[0][0].substring(0, 450)}...`}
         {comments[0][0].length >= 500 && <Button 
             className='d-grid' 
             size="sm"

@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-btn:hover {
+.home-icon:hover {
   cursor: pointer;
   border: 2px solid rgb(11, 94, 215);
   border-radius: 10%;

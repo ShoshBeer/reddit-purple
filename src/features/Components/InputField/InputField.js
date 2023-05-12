@@ -73,7 +73,7 @@ export function InputField() {
                                 </ButtonGroup>
                             </Card.Title>
                             <Card.Text>
-                                <h3 style={{fontSize: '1.5rem'}}>{radioValue.text}</h3>
+                                <span style={{fontSize: '1.5rem'}}>{radioValue.text}</span>
                             </Card.Text>
                             <Card.Img src={radioValue.img} />
                         </Card.Body>
