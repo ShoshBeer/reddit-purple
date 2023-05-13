@@ -56,6 +56,17 @@ const input = createSlice({
                 }
             }
             state.commentCounter = comments.length;
+        },
+
+        'resetInputSlice': (state) => {
+          state.isValidLink = false;
+          state.userInput = '';
+          state.postLink = '';
+          state.isLoading = false;
+          state.failedToLoad = false;
+          state.postData = [];
+          state.linkList = [];
+          state.commentCounter = 0;
         }
 
     },
@@ -86,5 +97,6 @@ export const selectLinks = state => state.input.linkList;
 export const selectCommentCounter = state => state.input.commentCounter;
 export const changeUserInput = input.actions.changeUserInput;
 export const addLinks = input.actions.addLinks;
+export const resetInputSlice = input.actions.resetInputSlice;
 export const inputReducer = input.reducer;
 

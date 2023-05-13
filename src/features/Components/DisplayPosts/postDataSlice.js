@@ -21,7 +21,7 @@ export const fetchURLData = createAsyncThunk(
     const JSONSettledPromises = await Promise.allSettled(JSONDataPromises);
     const fulfilledPostData = await Promise.all(JSONSettledPromises.filter((response, index) => {
       return response.status === 'fulfilled' && response.value.ok === true && fulfilledLinks.push(state.input.linkList[index]); //links corresponding to rejected promises are removed
-      }).map(response => response.value.json())); 
+      }).map(response => response.value.json()));
     const grabData = fulfilledPostData.map((post, index) => {
         const { title, author, score, subreddit_name_prefixed, selftext, created_utc, url, media_embed, secure_media, secure_media_embed, media } = post[0].data.children[0].data;
         //still need to figure out media posts. I think images can be found at post[0].data.children[0].data.secure_media_embed.media_domain_url but not sure how to use that
@@ -66,6 +66,13 @@ const postDataSlice = createSlice({
                 };
             })
         },
+
+        resetDataSlice(state) {
+          state.isFetchingPostData = false;
+          state.failedFetchingPostData = false;
+          state.JSONRedditLinks = [];
+          state.postObjects = [];
+        }
     },
     extraReducers: builder => {
         builder
@@ -86,6 +93,7 @@ const postDataSlice = createSlice({
 })
 
 export const loadJSON = postDataSlice.actions.loadJSON;
+export const resetDataSlice = postDataSlice.actions.resetDataSlice;
 export const selectLoading = state => state.postData.isFetchingPostData;
 export const selectJSONLinks = state => state.postDataSlice.JSONRedditLinks;
 export const selectPostObjects  = state => state.postData.postObjects;
