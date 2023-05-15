@@ -40,7 +40,7 @@ const input = createSlice({
 
         'addLinks': (state, action) => {
             const comments = action.payload[1].data.children;
-            const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n]+))/g;
+            const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n?]+))/g;
             for (let comment = 0; comment < comments.length; comment++) {
                 if (comments[comment].kind !== "t1") {
                     //check if it's a comment

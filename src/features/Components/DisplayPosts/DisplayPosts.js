@@ -27,6 +27,8 @@ export function DisplayPosts() {
     const navigate = useNavigate();
     const isValid = useSelector(selectIsValidLink);
 
+    const baseLink = 'https://www.reddit.com';
+
     //Change this to key off of "IsValidLink" insead.
     useEffect(() => {
         if(isValid === false) {
@@ -44,10 +46,10 @@ export function DisplayPosts() {
 
     return (
         <div className="mt-4">
+          <img className="home-icon" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
           {postTitle.length !== 0 &&
             <>
-            <img className="home-icon" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
-            <h2>{postTitle[0].data.children[0].data.title}</h2>
+            <h2><a target="_blank" href={baseLink + postTitle[0].data.children[0].data.permalink} className="text-decoration-none link-dark">{postTitle[0].data.children[0].data.title}</a></h2>
             <p style={{marginTop: '10px'}}>Searched {totalComments} comments and found {linkList.length} posts!</p>
             </>
           }
