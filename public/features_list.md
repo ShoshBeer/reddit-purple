@@ -84,11 +84,15 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
    - Reddit jpg images should show now
  - Posts aren't updated if you put in a second link until hard refresh
    - Link list isn't cleared until the page is refreshed so new links are added to end of list
+   - State is now cleared when navigating home with home button, but bug still happens when using browser back button
+   - Update: bug fixed! Added useEffect to input field page to reset both slices of state
  - Post with no links doesn't have title or back to home button
  - Markdown not formatted
+ - No error page
 
 ## To do:
 
+ - Change title and logo of site and repo
  - Make post title link back to reddit post
  - Centre media and move it to where text goes
  - Add context of original comment that linked it?

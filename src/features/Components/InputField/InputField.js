@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     changeUserInput,
     selectUserInput,
     selectIsValidLink,
-    fetchPostData
+    fetchPostData,
+    resetInputSlice
 } from './InputFieldSlice';
+import { resetDataSlice } from "../DisplayPosts/postDataSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -43,6 +45,11 @@ export function InputField() {
     const handleExample = () => {
       dispatch(changeUserInput("https://www.reddit.com/r/AskReddit/comments/9wsvhk/what_is_the_best_post_of_reddit_of_all_time/"));
     }
+
+    useEffect(() => {
+      dispatch(resetInputSlice());
+      dispatch(resetDataSlice());
+    }, [dispatch])
 
     return (
         <Container fluid>

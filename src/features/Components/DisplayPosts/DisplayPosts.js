@@ -7,14 +7,12 @@ import {
         loadJSON,
         selectLoading, 
         selectPostObjects,
-        resetDataSlice
     } from "./postDataSlice"
 import { 
         selectLinks, 
         selectPostData, 
         selectIsValidLink,
         selectCommentCounter,
-        resetInputSlice
     } from '../InputField/InputFieldSlice'
 import { Stack } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -41,12 +39,6 @@ export function DisplayPosts() {
         dispatch(fetchURLData());
     }, [dispatch, linkList]);
 
-    const toHome = () => {
-      navigate('/');
-      dispatch(resetInputSlice());
-      dispatch(resetDataSlice());
-    }
-
     //remove this const, and change mapped array in <ul> to linkList get all
     const displayLinks = postObjects.slice(0, 15);
 
@@ -54,7 +46,7 @@ export function DisplayPosts() {
         <div className="mt-4">
           {postTitle.length !== 0 &&
             <>
-            <img className="home-icon" onClick={toHome} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
+            <img className="home-icon" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
             <h2>{postTitle[0].data.children[0].data.title}</h2>
             <p style={{marginTop: '10px'}}>Searched {totalComments} comments and found {linkList.length} posts!</p>
             </>
