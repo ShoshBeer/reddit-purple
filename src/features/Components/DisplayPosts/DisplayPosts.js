@@ -43,7 +43,7 @@ export function DisplayPosts() {
 
     return (
         <div className="mt-4">
-          <img className="home-icon" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
+          <img className="home-icon mr-2" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
           {postTitle.length !== 0 &&
             <>
             <h2><a target="_blank" href={baseLink + postTitle[0].data.children[0].data.permalink} className="text-decoration-none link-dark">{postTitle[0].data.children[0].data.title}</a></h2>

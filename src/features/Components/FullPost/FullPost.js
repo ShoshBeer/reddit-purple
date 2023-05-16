@@ -21,7 +21,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
   return (
     <Card>
       <Card.Header>
-        <h2 style={titleStyle}>{title}</h2>
+        <h2 style={titleStyle}><ReactMarkdown children={title} /></h2>
         <img src={upvotes} width={15} style={{
           paddingTop: '4px', 
           float: 'left',
@@ -36,13 +36,15 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
             width={secure_media_embed.width} 
             height={secure_media_embed.height}
             loading='lazy'
-            style={{clear: 'both', display: 'block'}}
+            style={{clear: 'both'}}
+            className="my-2"
           /> 
         }
-        { url.search(/^.*\.(JPG|jpg)/) !== -1 &&
+        { url && url.search(/^.*\.(JPG|jpg|PNG|png|GIF|gif)$/) !== -1 &&
           <img 
             src={url}
             style={{maxWidth: '-webkit-fill-available'}}
+            className="my-2"
           />
         }
         <Button 
@@ -56,7 +58,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
           }} 
           >View Post in Reddit</Button>
       </Card.Header>
-      {body.length > 0 && body !== '[deleted]' && <Card.Body style={leftAlign}>
+      {body.length > 0 && body !== '[deleted]' && body !== '[removed]' && <Card.Body style={leftAlign}>
           {body.length < 500 ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} /> : showMorePost ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]}/> : <ReactMarkdown children={`${body.substring(0, 450)}...`} remarkPlugins={[remarkGfm]} /> }
           {body.length >= 500 && <Button 
             className='d-grid' 
@@ -66,7 +68,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
               {showMorePost ? 'Show less' : 'Show more'}
           </Button>}
       </Card.Body>}
-      {comments.length === 1 && <Card.Footer className="post-body" style={leftAlign} >
+      {comments.length === 1 && comments[0][0] !== '[deleted]' && comments[0][0] !== '[removed]' && <Card.Footer className="post-body" style={leftAlign} >
         <b><i>u/{comments[0][1]}</i></b>
         <br />
         <br />
