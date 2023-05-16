@@ -41,20 +41,17 @@ export function DisplayPosts() {
         dispatch(fetchURLData());
     }, [dispatch, linkList]);
 
-    //remove this const, and change mapped array in <ul> to linkList get all
-    const displayLinks = postObjects.slice(0, 15);
-
     return (
         <div className="mt-4">
-          <img className="home-icon" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
+          <img className="home-icon mr-2" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
           {postTitle.length !== 0 &&
             <>
-            <h2><a target="_blank" href={baseLink + postTitle[0].data.children[0].data.permalink} className="text-decoration-none link-dark">{postTitle[0].data.children[0].data.title}</a></h2>
+            <h2><a target="_blank" href={baseLink + postTitle[0].data.children[0].data.permalink} className="text-decoration-none">{postTitle[0].data.children[0].data.title}</a></h2>
             <p style={{marginTop: '10px'}}>Searched {totalComments} comments and found {linkList.length} posts!</p>
             </>
           }
-          <Stack gap={3}>
-            { loading ? <p>Loading</p> : postObjects.length === 0 ? <div></div> : displayLinks.map((post, ind) => {
+          <Stack gap={3} className="mb-3">
+            { loading ? <p>Loading</p> : postObjects.length === 0 ? <div></div> : postObjects.map((post, ind) => {
                 return ( 
                     <FullPost 
                         link={post.link} 
