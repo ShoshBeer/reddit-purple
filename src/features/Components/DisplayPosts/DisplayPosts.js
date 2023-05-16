@@ -41,9 +41,6 @@ export function DisplayPosts() {
         dispatch(fetchURLData());
     }, [dispatch, linkList]);
 
-    //remove this const, and change mapped array in <ul> to linkList get all
-    const displayLinks = postObjects.slice(0, 15);
-
     return (
         <div className="mt-4">
           <img className="home-icon" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
@@ -53,8 +50,8 @@ export function DisplayPosts() {
             <p style={{marginTop: '10px'}}>Searched {totalComments} comments and found {linkList.length} posts!</p>
             </>
           }
-          <Stack gap={3}>
-            { loading ? <p>Loading</p> : postObjects.length === 0 ? <div></div> : displayLinks.map((post, ind) => {
+          <Stack gap={3} className="mb-3">
+            { loading ? <p>Loading</p> : postObjects.length === 0 ? <div></div> : postObjects.map((post, ind) => {
                 return ( 
                     <FullPost 
                         link={post.link} 
