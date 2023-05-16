@@ -79,10 +79,7 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
 ## Bugs:
 
  - Invalid reddit link doesn't have title or back to home button
- - Some markdown not displaying correctly
-   - Blockquotes in last post of default example from r/AskHistorians
-   - \&nbsp; not showing as whitespace on [this](https://www.reddit.com/r/ireland/comments/3dpuxy/visiting_your_beautiful_country_this_weekend_want/) post linked in [this](https://www.reddit.com/r/AskReddit/comments/96fs1m/whats_one_piece_of_reddit_folklore_that_every/) thread
-   - Headers don't work without a space after the #
+ - Markdown headers don't work without a space after the #
 
 ## To do:
 
@@ -105,6 +102,9 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
    - Changed linklist regex to stop at query
  - Markdown not formatted
    - Fixed
+   - Blockquotes in last post of default example from r/AskHistorians
+   - \&nbsp; not showing as whitespace on [this](https://www.reddit.com/r/ireland/comments/3dpuxy/visiting_your_beautiful_country_this_weekend_want/) post linked in [this](https://www.reddit.com/r/AskReddit/comments/96fs1m/whats_one_piece_of_reddit_folklore_that_every/) thread
+   - Update: fixed
  - Change title and logo of site and repo
  - Error page should link back to home
  - Show more than 15 posts

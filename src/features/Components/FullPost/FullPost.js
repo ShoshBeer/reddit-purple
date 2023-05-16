@@ -3,11 +3,15 @@ import { useState } from "react";
 import upvotes from "../../../resources/upvotes.png";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import './FullPost.css';
 
 export function FullPost ({ title, author, body, comments, score, date, sub, link, media_embed, secure_media, secure_media_embed, media, url }) {
 
   const [showMorePost, setShowMorePost] = useState(false);
   const [showMoreComment, setShowMoreComment] = useState(false);
+
+  const bodyMarkDown = body.replace(/&gt;+/g, '>').replace(/&amp;nbsp;/g, '&nbsp;  ');
+  const commentsMarkDown = comments[0][0].replace(/&gt;+/g, '>').replace(/&amp;nbsp;/g, '&nbsp;  ');
 
   const leftAlign = {
     textAlign: 'left'
@@ -57,7 +61,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
           />
         }
         {body.length > 0 && body !== '[deleted]' && body !== '[removed]' && <div style={{textAlign: 'left', clear: 'both'}}>
-          {body.length < 500 ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} /> : showMorePost ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]}/> : <ReactMarkdown children={`${body.substring(0, 450)}...`} remarkPlugins={[remarkGfm]} /> }
+          {body.length < 500 ? <ReactMarkdown children={bodyMarkDown} remarkPlugins={[remarkGfm]} /> : showMorePost ? <ReactMarkdown children={bodyMarkDown} remarkPlugins={[remarkGfm]}/> : <ReactMarkdown children={`${bodyMarkDown.substring(0, 450)}...`} remarkPlugins={[remarkGfm]} /> }
           {body.length >= 500 && <Button 
             className='d-grid' 
             size="sm"
@@ -71,7 +75,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
         <b><i>u/{comments[0][1]}</i></b>
         <br />
         <br />
-        {comments[0][0].length < 500 ? <ReactMarkdown children={comments[0][0]} remarkPlugins={[remarkGfm]} /> : showMoreComment ? <ReactMarkdown children={comments[0][0]} remarkPlugins={[remarkGfm]} /> : <ReactMarkdown children={`${comments[0][0].substring(0, 450)}...`} remarkPlugins={[remarkGfm]} />}
+        {comments[0][0].length < 500 ? <ReactMarkdown children={commentsMarkDown} remarkPlugins={[remarkGfm]} /> : showMoreComment ? <ReactMarkdown children={commentsMarkDown} remarkPlugins={[remarkGfm]} /> : <ReactMarkdown children={`${commentsMarkDown.substring(0, 450)}...`} remarkPlugins={[remarkGfm]} />}
         {comments[0][0].length >= 500 && <Button 
             className='d-grid' 
             size="sm"
