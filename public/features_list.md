@@ -79,7 +79,6 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
 ## Bugs:
 
  - Invalid reddit link doesn't have title or back to home button
- - Markdown not formatted
 
 ## To do:
 
@@ -104,4 +103,6 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
  - Still some duplicate posts showing up
    - Happens because queries not the same
    - Changed linklist regex to stop at query
+ - Markdown not formatted
+   - Fixed
 
