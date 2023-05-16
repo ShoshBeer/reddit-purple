@@ -55,8 +55,7 @@ export function InputField() {
         <Container fluid>
             <Row>
               <Col>
-                <h1 style={{paddingTop: '15px'}}>Welcome to the Museum of Reddit Natural History!</h1>
-                {/* <h2 style={{fontSize: '1.5rem'}}>Use this site to browse Reddit posts linked in the comments of another post!</h2> */}
+                <h1 style={{paddingTop: '15px'}}>Welcome to Reddit Purple!</h1>
               </Col>
             </Row>
             <Row className="align-items-center py-4">
