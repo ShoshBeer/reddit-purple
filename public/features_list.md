@@ -1,4 +1,4 @@
-# Our App, Title TBD
+# Reddit Purple
 
 ## What do we want it to do?
 
@@ -83,13 +83,9 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
    - Blockquotes in last post of default example from r/AskHistorians
    - \&nbsp; not showing as whitespace on [this](https://www.reddit.com/r/ireland/comments/3dpuxy/visiting_your_beautiful_country_this_weekend_want/) post linked in [this](https://www.reddit.com/r/AskReddit/comments/96fs1m/whats_one_piece_of_reddit_folklore_that_every/) thread
    - Headers don't work without a space after the #
- - Still some media that doesn't display
-   - Examples: https://www.reddit.com/r/BetterEveryLoop/comments/4xf1uc/timescape/ and https://www.reddit.com/r/blackpeoplegifs/comments/70i6n5/when_bpt_wpf_meet_up/ linked by https://www.reddit.com/r/AskReddit/comments/7b5jzx/whats_your_favorite_reddit_post_that_you_have/
-   - Seems to be when url is of the form "https://i.imgur.com/wgWAg7u.gifv"
 
 ## To do:
 
- - Centre media and move it to where text goes
  - Add context of original comment that linked it?
  - Display posts as they load?
 
@@ -112,4 +108,9 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
  - Change title and logo of site and repo
  - Error page should link back to home
  - Show more than 15 posts
+ - Centre media and move it to where text goes
+ - Still some media that doesn't display
+   - Examples: https://www.reddit.com/r/BetterEveryLoop/comments/4xf1uc/timescape/ and https://www.reddit.com/r/blackpeoplegifs/comments/70i6n5/when_bpt_wpf_meet_up/ linked by https://www.reddit.com/r/AskReddit/comments/7b5jzx/whats_your_favorite_reddit_post_that_you_have/
+   - Seems to be when url is of the form "https://i.imgur.com/wgWAg7u.gifv"
+   - Update: .gifv files working by changing the suffix to .mp4 and displaying in a <video> tag
 

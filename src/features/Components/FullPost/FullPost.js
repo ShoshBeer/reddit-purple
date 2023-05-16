@@ -21,7 +21,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
   return (
     <Card>
       <Card.Header>
-        <h2 style={titleStyle}><ReactMarkdown children={title} /></h2>
+        <h2 style={titleStyle}><a href={link} target="_blank" className="text-decoration-none"><ReactMarkdown children={title} /></a></h2>
         <img src={upvotes} width={15} style={{
           paddingTop: '4px', 
           float: 'left',
@@ -40,25 +40,23 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
             className="my-2"
           /> 
         }
-        { url && url.search(/^.*\.(JPG|jpg|PNG|png|GIF|gif)$/) !== -1 &&
+        { url.search(/^.*\.(JPG|jpg|PNG|png|GIF|gif)$/) !== -1 &&
           <img 
             src={url}
             style={{maxWidth: '-webkit-fill-available'}}
             className="my-2"
           />
         }
-        <Button 
-          href={link}
-          target="_blank"
-          size='sm' 
-          variant='primary' 
-          style={{
-            clear: 'both',
-            display: 'block'
-          }} 
-          >View Post in Reddit</Button>
-      </Card.Header>
-      {body.length > 0 && body !== '[deleted]' && body !== '[removed]' && <Card.Body style={leftAlign}>
+        { url.search(/^.*\.(gifv)$/) !== -1 &&
+          <video 
+            controls
+            src={url.replace('.gifv', '.mp4')}
+            type="video/mp4"
+            style={{maxWidth: '-webkit-fill-available'}}
+            className="my-2"
+          />
+        }
+        {body.length > 0 && body !== '[deleted]' && body !== '[removed]' && <div style={{textAlign: 'left', clear: 'both'}}>
           {body.length < 500 ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} /> : showMorePost ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]}/> : <ReactMarkdown children={`${body.substring(0, 450)}...`} remarkPlugins={[remarkGfm]} /> }
           {body.length >= 500 && <Button 
             className='d-grid' 
@@ -67,8 +65,9 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
             onClick={() => setShowMorePost(!showMorePost)} >
               {showMorePost ? 'Show less' : 'Show more'}
           </Button>}
-      </Card.Body>}
-      {comments.length === 1 && comments[0][0] !== '[deleted]' && comments[0][0] !== '[removed]' && <Card.Footer className="post-body" style={leftAlign} >
+          </div>}
+      </Card.Header>
+      {comments.length === 1 && comments[0][0] !== '[deleted]' && comments[0][0] !== '[removed]' && <Card.Body className="post-body" style={leftAlign} >
         <b><i>u/{comments[0][1]}</i></b>
         <br />
         <br />
@@ -80,7 +79,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
             onClick={() => setShowMoreComment(!showMoreComment)} >
               {showMoreComment ? 'Show less' : 'Show more'}
         </Button>}
-      </Card.Footer> }
+      </Card.Body> }
     </Card>
   )
 }
