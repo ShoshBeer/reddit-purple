@@ -78,19 +78,31 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
 
 ## Bugs:
 
- - Still some duplicate posts showing up
-   - Happens because queries not the same
- - Media not always shown
-   - Reddit jpg images should show now
- - Posts aren't updated if you put in a second link until hard refresh
-   - Link list isn't cleared until the page is refreshed so new links are added to end of list
- - Post with no links doesn't have title or back to home button
- - Markdown not formatted
+ - Invalid reddit link doesn't have title or back to home button
 
 ## To do:
 
- - Make post title link back to reddit post
+ - Change title and logo of site and repo
+ - Error page should link back to home
  - Centre media and move it to where text goes
  - Add context of original comment that linked it?
  - Show more than 15 posts
  - Display posts as they load?
+
+## Done
+
+ - Posts aren't updated if you put in a second link until hard refresh
+   - Link list isn't cleared until the page is refreshed so new links are added to end of list
+   - State is now cleared when navigating home with home button, but bug still happens when using browser back button
+   - Update: bug fixed! Added useEffect to input field page to reset both slices of state
+ - Make post title link back to reddit post
+   - Done, but no hover effect except cursor
+ - Media not always shown
+   - Reddit jpg images should show now
+   - Unclear if reddit hosted images will always be jpg
+ - Still some duplicate posts showing up
+   - Happens because queries not the same
+   - Changed linklist regex to stop at query
+ - Markdown not formatted
+   - Fixed
+

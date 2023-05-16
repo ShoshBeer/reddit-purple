@@ -1,6 +1,8 @@
 import { Card, Button} from "react-bootstrap";
 import { useState } from "react";
 import upvotes from "../../../resources/upvotes.png";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export function FullPost ({ title, author, body, comments, score, date, sub, link, media_embed, secure_media, secure_media_embed, media, url }) {
 
@@ -14,10 +16,6 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
   const titleStyle = {
     textAlign: 'left',
     fontSize: '130%',
-  }
-
-  const htmlChars = (str) => {
-    return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
   }
 
   return (
@@ -58,25 +56,8 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
           }} 
           >View Post in Reddit</Button>
       </Card.Header>
-      {/* { Object.keys(secure_media_embed).length !== 0 && <Card.Body>
-        <iframe 
-          src={secure_media_embed.media_domain_url} 
-          scrolling={secure_media_embed.scrolling ? 'yes' : 'no'}
-          width={secure_media_embed.width} 
-          // height={secure_media_embed.height}
-          height={secure_media_embed.width}
-          ></iframe>  
-      </Card.Body>} */}
-      {/* { Object.keys(media_embed).length !== 0 && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(media_embed.content)}}></Card.Body> }
-      <hr />
-      { secure_media && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(secure_media.oembed.html)}}></Card.Body> }
-      <hr />
-      { Object.keys(secure_media_embed).length !== 0 && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(secure_media_embed.content)}}></Card.Body> }
-      <hr />
-      { media && <Card.Body dangerouslySetInnerHTML={{__html: htmlChars(media.oembed.html)}}></Card.Body> } */}
       {body.length > 0 && body !== '[deleted]' && <Card.Body style={leftAlign}>
-        <Card.Text className="post-body">
-          {body.length < 500 ? body : showMorePost ? body : `${body.substring(0, 450)}...`}
+          {body.length < 500 ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} /> : showMorePost ? <ReactMarkdown children={body} remarkPlugins={[remarkGfm]}/> : <ReactMarkdown children={`${body.substring(0, 450)}...`} remarkPlugins={[remarkGfm]} /> }
           {body.length >= 500 && <Button 
             className='d-grid' 
             size="sm"
@@ -84,12 +65,12 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
             onClick={() => setShowMorePost(!showMorePost)} >
               {showMorePost ? 'Show less' : 'Show more'}
           </Button>}
-        </Card.Text>
       </Card.Body>}
       {comments.length === 1 && <Card.Footer className="post-body" style={leftAlign} >
         <b><i>u/{comments[0][1]}</i></b>
         <br />
-        {comments[0][0].length < 500 ? comments[0][0] : showMoreComment ? comments[0][0] : `${comments[0][0].substring(0, 450)}...`}
+        <br />
+        {comments[0][0].length < 500 ? <ReactMarkdown children={comments[0][0]} remarkPlugins={[remarkGfm]} /> : showMoreComment ? <ReactMarkdown children={comments[0][0]} remarkPlugins={[remarkGfm]} /> : <ReactMarkdown children={`${comments[0][0].substring(0, 450)}...`} remarkPlugins={[remarkGfm]} />}
         {comments[0][0].length >= 500 && <Button 
             className='d-grid' 
             size="sm"

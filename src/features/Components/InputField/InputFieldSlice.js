@@ -40,7 +40,7 @@ const input = createSlice({
 
         'addLinks': (state, action) => {
             const comments = action.payload[1].data.children;
-            const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n]+))/g;
+            const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n?]+))/g;
             for (let comment = 0; comment < comments.length; comment++) {
                 if (comments[comment].kind !== "t1") {
                     //check if it's a comment
@@ -56,6 +56,17 @@ const input = createSlice({
                 }
             }
             state.commentCounter = comments.length;
+        },
+
+        'resetInputSlice': (state) => {
+          state.isValidLink = false;
+          state.userInput = '';
+          state.postLink = '';
+          state.isLoading = false;
+          state.failedToLoad = false;
+          state.postData = [];
+          state.linkList = [];
+          state.commentCounter = 0;
         }
 
     },
@@ -86,5 +97,6 @@ export const selectLinks = state => state.input.linkList;
 export const selectCommentCounter = state => state.input.commentCounter;
 export const changeUserInput = input.actions.changeUserInput;
 export const addLinks = input.actions.addLinks;
+export const resetInputSlice = input.actions.resetInputSlice;
 export const inputReducer = input.reducer;
 
