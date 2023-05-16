@@ -82,8 +82,6 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
 
 ## To do:
 
- - Change title and logo of site and repo
- - Error page should link back to home
  - Centre media and move it to where text goes
  - Add context of original comment that linked it?
  - Show more than 15 posts
@@ -105,4 +103,6 @@ Users paste a reddit URL with 'top thread' post, and the hyperlinks will tell th
    - Changed linklist regex to stop at query
  - Markdown not formatted
    - Fixed
+ - Change title and logo of site and repo
+ - Error page should link back to home
 
