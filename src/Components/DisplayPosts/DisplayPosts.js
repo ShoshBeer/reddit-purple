@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import home from '../../../resources/home.png'
+import home from '../../resources/home.png'
 import { useDispatch, useSelector } from "react-redux";
 import { FullPost } from "../FullPost/FullPost";
 import {
@@ -46,7 +46,7 @@ export function DisplayPosts() {
           <img className="home-icon mr-2" onClick={() => navigate('/')} style={{float: 'left'}} alt='Home icon' height='50px' src={home}/>
           {postTitle.length !== 0 &&
             <>
-            <h2><a target="_blank" href={baseLink + postTitle[0].data.children[0].data.permalink} className="text-decoration-none">{postTitle[0].data.children[0].data.title}</a></h2>
+            <h2><a target="_blank" rel="noreferrer" href={baseLink + postTitle[0].data.children[0].data.permalink} className="text-decoration-none">{postTitle[0].data.children[0].data.title}</a></h2>
             <p style={{marginTop: '10px'}}>Searched {totalComments} comments and found {linkList.length} posts!</p>
             </>
           }

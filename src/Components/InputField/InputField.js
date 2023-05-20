@@ -17,8 +17,8 @@ import Stack from "react-bootstrap/Stack";
 import Card from "react-bootstrap/Card";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import old_img from "../../../resources/old_way_cr.png";
-import new_img from "../../../resources/new_way_cr.png";
+import old_img from "../../resources/old_way_cr.png";
+import new_img from "../../resources/new_way_cr.png";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 

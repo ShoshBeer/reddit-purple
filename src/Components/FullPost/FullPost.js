@@ -1,6 +1,6 @@
 import { Card, Button} from "react-bootstrap";
 import { useState } from "react";
-import upvotes from "../../../resources/upvotes.png";
+import upvotes from "../../resources/upvotes.png";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import './FullPost.css';
@@ -25,8 +25,8 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
   return (
     <Card>
       <Card.Header>
-        <h2 style={titleStyle}><a href={link} target="_blank" className="text-decoration-none"><ReactMarkdown children={title} /></a></h2>
-        <img src={upvotes} width={15} style={{
+        <h2 style={titleStyle}><a href={link} target="_blank" rel="noreferrer" className="text-decoration-none"><ReactMarkdown children={title} /></a></h2>
+        <img src={upvotes} alt="Upvotes" width={15} style={{
           paddingTop: '4px', 
           float: 'left',
           display: "inline-block", 
@@ -35,6 +35,7 @@ export function FullPost ({ title, author, body, comments, score, date, sub, lin
         <p style={{float: 'right'}} >Posted in <b>{sub}</b> by <b>u/{author}</b> on <b>{new Date(date*1000).toDateString()}</b></p>
         { Object.keys(secure_media_embed).length !== 0 &&
           <iframe 
+            title={secure_media_embed.media_domain_url}
             src={secure_media_embed.media_domain_url} 
             scrolling={secure_media_embed.scrolling ? 'yes' : 'no'}
             width={secure_media_embed.width} 

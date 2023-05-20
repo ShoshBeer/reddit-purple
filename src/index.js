@@ -10,10 +10,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { InputField } from './features/Components/InputField/InputField';
-import { DisplayPosts } from './features/Components/DisplayPosts/DisplayPosts';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectLinks } from './features/Components/InputField/InputFieldSlice';
+import { InputField } from './Components/InputField/InputField';
+import { DisplayPosts } from './Components/DisplayPosts/DisplayPosts';
 import ErrorPage from './errorPage';
 
 const router = createBrowserRouter([
