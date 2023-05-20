@@ -29,5 +29,11 @@
         "*://*.reddit.com/r/*/comments/*"
       ]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["app/DisplayPosts.js"],
+      "matches": ["*://*.reddit.com/*"]
+    }
   ]
 }
