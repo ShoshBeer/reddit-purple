@@ -1,0 +1,49 @@
+{
+  "name": "Reddit Purple",
+  "description": "Display linked Reddit posts directly on the page!",
+  "version": "1.0",
+
+  "manifest_version": 3,
+  
+  "action": {
+    "default_title": "Reddit Purple",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "./images/Snoo_16.png",
+      "32": "./images/Snoo_32.png",
+      "48": "./images/Snoo_48.png",
+      "128": "./images/Snoo_128.png"
+    }
+  },
+
+  "icons": {
+    "16": "./images/Snoo_16.png",
+    "32": "./images/Snoo_32.png",
+    "48": "./images/Snoo_48.png",
+    "128": "./images/Snoo_128.png"
+  },
+
+  "background": {
+    "service_worker": "./background.js"
+  },
+
+  "options_page": "./options.html",
+
+
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "webNavigation",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.reddit.com/r/*/comments/*"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["/images/upvotes.png"],
+      "matches": ["*://*.reddit.com/*"]
+    }
+  ]
+}
