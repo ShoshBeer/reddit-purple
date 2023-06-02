@@ -1,0 +1,61 @@
+body *:not(#foreground, #foreground *) {
+  display: none;
+}
+
+#app-container {
+  display: flex !important;
+}
+
+#foreground {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: white;
+}
+
+h2 {
+  font-size: 130%;
+  padding-top: 0.5rem;
+}
+
+#foreground .card-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+#foreground .card {
+  border: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+#foreground blockquote {
+  color: #666;
+  margin: 0;
+  padding-left: 1.5em;
+  border-left: 0.5em #eee solid;
+}
+
+#foreground code {
+  font-family: monospace;
+}
+
+#foreground iframe,
+#foreground img,
+#foreground video {
+  clear: both;
+  margin: auto;
+  display: block;
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+}
+
+#foreground .upvotes {
+  margin: 5px 5px 0 0;
+}
+
+#foreground .post-title {
+  font-size: 1.5rem;
+}
+
+#foreground .clear {
+  clear: both;
+}
