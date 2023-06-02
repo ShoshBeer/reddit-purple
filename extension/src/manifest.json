@@ -1,6 +1,6 @@
 {
   "name": "Reddit Purple",
-  "description": "Detect Reddit links on the page and toggle to view the simplified Reddit posts directly.",
+  "description": "Scan Reddit pages for links to other posts and comments. Toggle between viewing the simplified Reddit posts and the orignal webpage.",
   "version": "1.0",
 
   "manifest_version": 3,
@@ -28,7 +28,6 @@
   },
 
   "options_page": "./options.html",
-
 
   "permissions": [
     "activeTab",

@@ -77,8 +77,6 @@ chrome.storage.local.get(function(data) {
 });
 
 chrome.storage.sync.get({minimum: 10}).then(async (result) => {
-  console.log(result);
-  console.log(result.minimum);
   if (jsonLinks.length >= result.minimum) {
       const postObjects = await getPostObjects(jsonLinks);
     
