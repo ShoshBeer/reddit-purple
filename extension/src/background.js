@@ -1,3 +1,12 @@
+chrome.webNavigation.onCompleted.addListener(async () => {
+  const [tab] = await chrome.tabs.query({ active: true });
+
+  // Set CSS injection property to false for any page that loads for the badge to turn 'OFF'
+  chrome.storage.session.get(function(data) {
+    chrome.storage.session.set({...data, [tab.id]: false});
+  });
+})
+
 chrome.webNavigation.onCompleted.addListener(injectScript, {
   url: [
     {urlMatches: "reddit\.com\/r\/[^/]+\/comments\/[^/]+"},
@@ -6,11 +15,6 @@ chrome.webNavigation.onCompleted.addListener(injectScript, {
 
 async function injectScript() {
   const [tab] = await chrome.tabs.query({ active: true });
-
-  // Set CSS injection property to false for a page that loads
-  chrome.storage.session.get(function(data) {
-    chrome.storage.session.set({...data, [tab.id]: false});
-  });
   
   chrome.scripting.executeScript({
     target: {tabId: tab.id},
@@ -70,7 +74,8 @@ chrome.runtime.onMessage.addListener(async (message) => {
 
 chrome.runtime.onMessage.addListener(async (message) => {
   const [tab] = await chrome.tabs.query({ active: true });
-  if (typeof message === "object" && message[tab.url] > 9) {
+  const min = await chrome.storage.sync.get({minimum: 10});
+  if (typeof message === "object" && message[tab.url] >= min.minimum) {
     chrome.action.setBadgeText({
       tabId: tab.id,
       text: 'ON',

@@ -1,6 +1,6 @@
 {
   "name": "Reddit Purple",
-  "description": "Display linked Reddit posts directly on the page!",
+  "description": "Detect Reddit links on the page and toggle to view the simplified Reddit posts directly.",
   "version": "1.0",
 
   "manifest_version": 3,

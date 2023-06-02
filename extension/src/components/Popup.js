@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
 const [tab] = await chrome.tabs.query({ active: true });
 const status = await chrome.storage.session.get({[tab.id]: false});
+const min = await chrome.storage.sync.get({minimum: 10});
 
 function Popup() {
 
@@ -29,13 +30,13 @@ function Popup() {
   const regexPostLink = /http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^/) ]+))/g;
 
   return (
-    <div style={styles.main} className='redditPurple'>
+    <div style={styles.main} className='text-center'>
       <h1>Reddit Purple</h1>
       {tab.url.match(regexPostLink) ? 
         <div className='validURL' >
           {!numOfLinks && numOfLinks !== 0 ? 
             <p>Counting...</p> : 
-            (numOfLinks < 10 ?
+            (numOfLinks < min.minimum ?
             <p>Not enough posts: {numOfLinks} Reddit links in the comments</p> :
             (<div>
               <p>{numOfLinks} Reddit posts found!</p>
@@ -47,7 +48,7 @@ function Popup() {
                   id='toggle-reddit-purple'
                   checked={toggleValue}
                   onChange={handleToggle}
-                  disabled={numOfLinks < 10}
+                  disabled={numOfLinks < min.minimum}
                 />
               </Form>
             </div>))
@@ -62,7 +63,6 @@ function Popup() {
 }
 const styles = {
   main: {
-    textAlign: 'center',
     width: '150px'
   }
 }
