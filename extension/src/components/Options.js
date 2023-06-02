@@ -19,6 +19,14 @@ function Options() {
     });
   }
 
+  function handleClear() {
+    chrome.storage.local.clear();
+    chrome.storage.sync.remove("minimum", function() {
+      setSavedMin(10);
+      alert("Storage cleared");
+    });
+  }
+
   return (
     <div className='container'>
       <h1 className='text-center'>Options</h1>
@@ -35,12 +43,18 @@ function Options() {
             <Form.Control className='d-block' type='number' min='1' max='15' value={min} onChange={e => handleThreshold(e)} id='thresholdChoice' />
           </Form.Group>
         </Row>
-        <Row sm={2} lg={3}>
+        <Row className='mb-3' sm={2} lg={3}>
           <Col>
-            <Button onClick={handleSave}>Save</Button>
+            <Button variant='outline-primary' onClick={handleSave}>Save</Button>
           </Col>
         </Row>
-      </Form> 
+      </Form>
+      <Row>
+        <Col>
+          <p className='fs-5'>Warning: clearing extension cache may affect other extensions.</p>
+          <Button className='text-center' variant='danger' onClick={handleClear}>Clear extension cache</Button>
+        </Col>
+      </Row>
     </div>
   )
 }
