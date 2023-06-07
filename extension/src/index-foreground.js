@@ -76,8 +76,10 @@ chrome.storage.local.get(function(data) {
   chrome.storage.local.set({...data, [url]: jsonLinks.length});
 });
 
-if (jsonLinks.length > 9) {
-  const postObjects = await getPostObjects(jsonLinks);
-
-  render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, document.querySelector('#foreground'));
-}
+chrome.storage.sync.get({minimum: 10}).then(async (result) => {
+  if (jsonLinks.length >= result.minimum) {
+      const postObjects = await getPostObjects(jsonLinks);
+    
+      render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, document.querySelector('#foreground'));
+    }
+});

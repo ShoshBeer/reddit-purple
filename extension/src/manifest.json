@@ -1,6 +1,6 @@
 {
   "name": "Reddit Purple",
-  "description": "Display linked Reddit posts directly on the page!",
+  "description": "Scan Reddit pages for links to other posts and comments. Toggle between viewing the simplified Reddit posts and the orignal webpage.",
   "version": "1.0",
 
   "manifest_version": 3,
@@ -28,7 +28,6 @@
   },
 
   "options_page": "./options.html",
-
 
   "permissions": [
     "activeTab",

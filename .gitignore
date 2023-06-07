@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # extension
-/extension/node_modules
-/extension/dist
+*/node_modules/
+*/dist/
