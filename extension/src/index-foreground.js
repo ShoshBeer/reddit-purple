@@ -6,7 +6,7 @@ import './scss/styles.scss';
 function checkLinks() {
   // Get all anchor tags from the user text in the comment area, all any hrefs that match reddit posts to linkList
   const jsonLinkList = [];
-  const aTags = document.querySelectorAll(".commentarea .usertext-body a");
+  const aTags = document.querySelectorAll(".commentarea .usertext-body a, ._1ump7uMrSA43cqok14tPrG ._3cjCphgls6DH-irkVaA0GM a");
   const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n?#]+))/g;
   for (let i = 0; i < aTags.length; i++) {
     if (aTags[i].href.match(regexLink)) {
@@ -62,8 +62,7 @@ async function getPostObjects(jsonlinkList) {
   return selectedData;
 }
 
-const titleElement = document.querySelector("a.title");
-const jsonLinks = checkLinks();
+const titleElement = document.querySelector("a.title") ?? document.querySelector("h1._eYtD2XCVieq6emjKBH3m");
 
 const url = window.location.href;
 
