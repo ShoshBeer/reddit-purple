@@ -1,7 +1,28 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Foreground from './components/Foreground.js';
+import Foreground from '../components/Foreground.js';
 import './scss/styles.scss';
+
+function checkLinks() {
+  // Get all anchor tags from the user text in the comment area, all any hrefs that match reddit posts to linkList
+  let jsonLinkList = [];
+  const aTags = document.querySelectorAll(".commentarea .usertext-body a, ._1ump7uMrSA43cqok14tPrG ._3cjCphgls6DH-irkVaA0GM a");
+  const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n?#]+))/g;
+  for (let i = 0; i < aTags.length; i++) {
+    if (aTags[i].href.match(regexLink)) {
+      let link = aTags[i].href.match(regexLink)[0];
+      const httpIndex = link.indexOf('://');
+      if (link[httpIndex -1] !== 's') {
+        link = link.slice(0, httpIndex) + 's' + link.slice(httpIndex);
+      }
+      link += '.json';
+      if (!jsonLinkList.includes(link)) {
+        jsonLinkList.push(link);
+      }
+    }
+  }
+  return jsonLinkList;
+}
 
 async function getPostObjects(jsonlinkList) {
 
@@ -48,16 +69,16 @@ const url = window.location.href;
 // This message is received by Popup.js and background.js
 // Popup.js updates the link count if it's open while this message sends
 // Background.js turns the badge to 'ON' if there are 10 or more links
-// chrome.runtime.sendMessage({[url]: jsonLinks.length});
+chrome.runtime.sendMessage({[url]: jsonLinks.length});
 
-// chrome.storage.local.get(function(data) {
-//   chrome.storage.local.set({...data, [url]: jsonLinks.length});
-// });
+chrome.storage.local.get(function(data) {
+  chrome.storage.local.set({...data, [url]: jsonLinks.length});
+});
 
-// chrome.storage.sync.get({minimum: 10}).then(async (result) => {
-//   if (jsonLinks.length >= result.minimum) {
-//       const postObjects = await getPostObjects(jsonLinks);
+chrome.storage.sync.get({minimum: 10}).then(async (result) => {
+  if (jsonLinks.length >= result.minimum) {
+      const postObjects = await getPostObjects(jsonLinks);
     
-//       render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, document.querySelector('#foreground'));
-//     }
-// });
+      render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, document.querySelector('#foreground'));
+    }
+});

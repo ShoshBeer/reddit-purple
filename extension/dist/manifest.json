@@ -27,6 +27,13 @@
     "service_worker": "./background.js"
   },
 
+  "content_scripts": [
+    {
+      "matches": ["*://*.reddit.com/*"],
+      "js": ["postScrubber.js"]
+    }
+  ],
+
   "options_page": "./options.html",
 
   "permissions": [
