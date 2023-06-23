@@ -3,8 +3,8 @@ import Form from 'react-bootstrap/Form';
 
 //Grab the current tab, and some data from storage. To be used to update the popup if it does not receive messages (like when it's closed)
 const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-const content = await chrome.storage.session.get([tab.id.toString()]);
-// const status = await chrome.storage.session.get({[tab.id]: false});
+const content = await chrome.storage.local.get([tab.id.toString()]);
+// const status = await chrome.storage.local.get({[tab.id]: false});
 // const min = await chrome.storage.sync.get({minimum: 10});
 
 export default function Popup() {
@@ -35,12 +35,12 @@ export default function Popup() {
   });
 
   //Grab data from storage, and set variables appropriately. Used each time popup is rendered in case it did not update.
-  if(numOfLinks === 0 && content?.[tab.id] !== undefined) {
+  if(numOfLinks === 0 && content?.[tab.id]?.links !== undefined) {
     console.log('Links Length: ', content[tab.id].links.length);
     setNumOfLinks(content[tab.id].links.length);
   }
 
-  if(doneChecking === false && content?.[tab.id] !== undefined) {
+  if(doneChecking === false && content?.[tab.id]?.done !== undefined) {
     console.log('Done: ', content[tab.id].done);
     setDoneChecking(content[tab.id].done);
   }

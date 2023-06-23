@@ -12,7 +12,7 @@ chrome.runtime.sendMessage({type: 'startCheck'});
 function checkLinks() {
   console.log('checkLinks has been called.');
   const jsonLinkList = [];
-  const aTags = document.querySelectorAll(".commentarea .usertext-body a, ._1ump7uMrSA43cqok14tPrG ._3cjCphgls6DH-irkVaA0GM a, #-post-rtjson-content a");
+  const aTags = document.querySelectorAll(".commentarea .usertext-body a, ._1ump7uMrSA43cqok14tPrG ._3cjCphgls6DH-irkVaA0GM a, #-post-rtjson-content a, .md p a");
   const regexLink = /(?!.+\\)http(s)?(:\/\/)?(www\.)?([^.]+\.)?reddit\.com\/r\/([^/]+)\/(comments\/([^) \n?#]+))/g;
   for (let i = 0; i < aTags.length; i++) {
     if (aTags[i].href.match(regexLink)) {
@@ -86,16 +86,15 @@ async function getPostObjects(jsonlinkList) {
 const url = window.location.href;
 
 //This periodically runs checkLinks() and sends messages with the expanded list or a message letting the rest of the extension that it is done checking.
-async function getThicc(runningList = []) {
-  await setTimeout(() => {
-    let checkList = checkLinks();
+function getThicc(runningList = [], checkList = checkLinks()) {
+  setTimeout(() => {
     if( checkList.length > runningList.length) {
       chrome.runtime.sendMessage({url: url, links: checkList, type: 'storeLinks'});
       return (getThicc(checkList))
     } else {
       chrome.runtime.sendMessage({type: 'doneCheck'});
     }
-  }, 4*1000);
+  }, 2*1000);
 } 
 
 
