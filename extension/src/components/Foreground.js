@@ -4,6 +4,7 @@ import { Stack, Row, Container } from "react-bootstrap";
 
 function Foreground({ title, postObjects }) {
 
+  console.log('postObjects:\n', postObjects);
   return (
     <Container>
       <Row className='d-none' id="app-container">
