@@ -10,6 +10,8 @@ const titleElement = document.querySelector("h1._eYtD2XCVieq6emjKBH3m, a.title")
 console.log('titleElement:\n', titleElement);
 const url = window.location.href;
 const { minimum } = await chrome.storage.sync.get({minimum: 10});
+render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, document.querySelector('#foreground'));
+
 // console.log('Minimum: ', minimum);
 // console.log('url: ', url);
 
@@ -18,7 +20,7 @@ const { minimum } = await chrome.storage.sync.get({minimum: 10});
 // Background.js turns the badge to 'ON' if there are 10 or more links
 async function scrubPage(runningList = []) {
   // console.log('Running Page Scrubber');
-  setTimeout( async() => {
+  setTimeout( async () => {
     let checkList = checkLinks();
     // console.log('CheckLinks returned:\n', checkList)
     if( checkList.length > runningList.length) {
@@ -34,7 +36,6 @@ async function scrubPage(runningList = []) {
       console.log('attempting to render foreground.');
       const postObjects = await getPostObjects(checkList);
       console.log('postObjects:\n', postObjects);
-      render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, document.querySelector('#foreground'));
     }
   }, 2*1000);
 };
