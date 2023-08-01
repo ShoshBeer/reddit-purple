@@ -20,10 +20,9 @@ function Options() {
   }
 
   function handleClear() {
-    chrome.storage.local.clear();
     chrome.storage.sync.remove("minimum", function() {
       setSavedMin(10);
-      alert("Storage cleared");
+      alert("Sync Storage cleared");
     });
   }
 
@@ -51,7 +50,6 @@ function Options() {
       </Form>
       <Row>
         <Col>
-          <p className='fs-5'>Warning: clearing extension cache may affect other extensions.</p>
           <Button className='text-center' variant='danger' onClick={handleClear}>Clear extension cache</Button>
         </Col>
       </Row>

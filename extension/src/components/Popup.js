@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
 const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-console.log('tab as seen by popup: \n', tab);
-const status = await chrome.storage.local.get({[tab.id]: false});
+const status = await chrome.storage.session.get({[tab.id]: false});
 const min = await chrome.storage.sync.get({minimum: 10});
 
 function Popup() {
@@ -23,7 +22,7 @@ function Popup() {
   });
 
   if (!numOfLinks && numOfLinks !== 0) {
-    chrome.storage.local.get(tab.url).then((result) => {
+    chrome.storage.session.get(tab.url).then((result) => {
       setNumOfLinks(result[tab.url]);
     });
   }

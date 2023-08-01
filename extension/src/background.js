@@ -10,8 +10,8 @@ chrome.webNavigation.onCompleted.addListener((details) => {
   //Grabs Tab id from page just navigated to
   const tabId = details.tabId;
   //Sets false on Tabid in storage
-  chrome.storage.local.get(function(data) {
-    chrome.storage.local.set({...data, [tabId]: false});
+  chrome.storage.session.get(function(data) {
+    chrome.storage.session.set({...data, [tabId]: false});
   });
 })
 // possibly merge these two navigation listeners
@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener(async (message) => {
   const min = await chrome.storage.sync.get({minimum: 10});
 
   // If badge wasn't set to 'ON' because the message was missed, then this will change it to 'ON' when the user clicks the toggle
-  chrome.storage.local.get(tab.url).then(results => {
+  chrome.storage.session.get(tab.url).then(results => {
     if (results[tab.url] >= min.minimum) {
       chrome.action.setBadgeText({
         tabId: tab.id,
@@ -54,7 +54,7 @@ chrome.runtime.onMessage.addListener(async (message) => {
 
   if (message.action === 'toggle' && message.target === tab.id) {
 
-    const prevState = await chrome.storage.local.get({[tab.id]: false});
+    const prevState = await chrome.storage.session.get({[tab.id]: false});
     const nextState = prevState[tab.id] === true ? false : true;
 
     if (nextState === true) {
@@ -64,8 +64,8 @@ chrome.runtime.onMessage.addListener(async (message) => {
         target: { tabId: tab.id },
       });
       // Store status of injection in session storage for toggle display in Popup.js
-      chrome.storage.local.get(function(data) {
-        chrome.storage.local.set({...data, [tab.id]: true});
+      chrome.storage.session.get(function(data) {
+        chrome.storage.session.set({...data, [tab.id]: true});
       });
 
     } else if (nextState === false) {
@@ -75,8 +75,8 @@ chrome.runtime.onMessage.addListener(async (message) => {
         target: { tabId: tab.id },
       });
 
-      chrome.storage.local.get(function(data) {
-        chrome.storage.local.set({...data, [tab.id]: false});
+      chrome.storage.session.get(function(data) {
+        chrome.storage.session.set({...data, [tab.id]: false});
       });
     }
   }

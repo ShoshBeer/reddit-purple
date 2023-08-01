@@ -6,7 +6,6 @@ import Loading from './Loading';
 
 function Foreground({ title, postObjects, loading = false }) {
 
-  console.log('[Foreground.js\npostObjects:\n', postObjects);
   return (
     <Container>
       <Row className='d-none' id="app-container">
