@@ -1,6 +1,8 @@
 import React from "react";
+import { Stack } from "react-bootstrap";
+import { FullPost } from "./FullPost";
 
-export function PostContainer() {
+export function PostContainer( {postObjects}) {
   return(
     <Stack gap={3} id='PostContainer' className="mb-3">
     {postObjects.map((post, ind) => {
