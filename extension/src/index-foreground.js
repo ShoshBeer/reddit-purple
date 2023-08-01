@@ -36,10 +36,8 @@ async function scrubPage(runningList = []) {
       return scrubPage(checkList);
       //If the number of links found is larger than the minimum, grab their post data, and render them. The are hidden by default until the extension is toggled manually.
     } else if (checkList.length >= minimum) {
-      console.log('attempting to render foreground.');
       const postObjects = await getPostObjects(checkList);
-      console.log('postObjects:\n', postObjects);
-      root.render(<Foreground title={title} postObjects={postObjects} loading={true} />);
+      root.render(<Foreground title={title} postObjects={postObjects} />);
     }
   }, 2*1000);
 };
