@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { render, createRoot} from 'react-dom';
 import Foreground from './components/Foreground.js';
 import './scss/styles.scss';
 import checkLinks from './utils/checkLinks.js';
@@ -8,9 +8,11 @@ import getPostObjects from './utils/getPostObjects.js';
 
 const titleElement = document.querySelector("h1._eYtD2XCVieq6emjKBH3m, a.title");
 console.log('titleElement:\n', titleElement);
+const title = titleElement.innerHTML;
 const url = window.location.href;
 const { minimum } = await chrome.storage.sync.get({minimum: 10});
-render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, document.querySelector('#foreground'));
+const root = createRoot(document.querySelector('#foreground'));
+root.render(<Foreground title={title} postObjects={[]} loading={true} />);
 
 // console.log('Minimum: ', minimum);
 // console.log('url: ', url);
@@ -18,6 +20,7 @@ render(<Foreground title={titleElement.innerHTML} postObjects={postObjects} />, 
 // This message is received by Popup.js and background.js
 // Popup.js updates the link count if it's open while this message sends
 // Background.js turns the badge to 'ON' if there are 10 or more links
+// We need to recursively check for links as they populate on the dom
 async function scrubPage(runningList = []) {
   // console.log('Running Page Scrubber');
   setTimeout( async () => {
@@ -36,12 +39,9 @@ async function scrubPage(runningList = []) {
       console.log('attempting to render foreground.');
       const postObjects = await getPostObjects(checkList);
       console.log('postObjects:\n', postObjects);
+      root.render(<Foreground title={title} postObjects={postObjects} loading={true} />);
     }
   }, 2*1000);
 };
 
 scrubPage();
-
-
-
-
