@@ -16,7 +16,9 @@ function Popup() {
   }
 
   chrome.runtime.onMessage.addListener((message) => {
+    console.log('Popup Recieved Message: \n', message);
     if (tab.url in message) {
+      console.log(`Setting num of links to: ${message[tab.url]}`);
       setNumOfLinks(message[tab.url]);
     }
   });
