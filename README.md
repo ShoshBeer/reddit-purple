@@ -10,6 +10,12 @@ These threads are gold mines of content, but annoying to browse because it requi
 
 The extension subdirectory is a standalone Chrome extension that automatically detects when the user is on a page with other Reddit posts linked in the comments. It turns 'on' and the user can toggle between seeing the original webpage and seeing a clean display of all the linked posts/comments.
 
+## Demo
+
+See the extension in action as it simplifies the browsing experience for [What's your favorite Reddit post that you have under "Saved"?](https://www.reddit.com/r/AskReddit/comments/7b5jzx/whats_your_favorite_reddit_post_that_you_have/)
+
+https://github.com/ShoshBeer/reddit-purple/assets/95894596/0277d689-803b-4985-8ff6-bfeeb1820c14
+
 ## Tools
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template. 
